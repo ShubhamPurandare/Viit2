@@ -142,7 +142,7 @@ public class FragmentTwo extends Fragment {
 
             Iterator i = dataSnapshot.getChildren().iterator();
 
-            while (i.hasNext()){
+            //while (i.hasNext()){
                 try {
                     String pid = dataSnapshot.child("Post_id").getValue().toString();
                     Log.d(TAG, "Pid is " + pid);
@@ -151,11 +151,6 @@ public class FragmentTwo extends Fragment {
                     String imageUrl = dataSnapshot.child("Image").getValue().toString();
                     String date = dataSnapshot.child("Time").getValue().toString();
                   //  Log.d(TAG, "onChildAdded: image url is "+imageUrl);
-                    ((EventsActivity)getActivity()).currentPidGandharva = Integer.parseInt(pid);
-                    Log.d(TAG , "Current latest pid is"+ ((EventsActivity)getActivity()).currentPidGandharva);
-                    editor.putString("CurrentPidGandharva" , ""+((EventsActivity)getActivity()).currentPidGandharva);
-                    editor.commit();
-                    Log.d(TAG , "Current latest pid in Shared prefrences is"+ ((EventsActivity)getActivity()).currentPidGandharva);
 
 
                     RealmHelper helper = new RealmHelper(realm);
@@ -165,6 +160,11 @@ public class FragmentTwo extends Fragment {
                     }else {
                         Log.d(TAG, "onChildAdded: Pid "+pid+"doesnot exists");
 
+                        ((EventsActivity)getActivity()).currentPidGandharva = Integer.parseInt(pid);
+                        Log.d(TAG , "Current latest pid is"+ ((EventsActivity)getActivity()).currentPidGandharva);
+                        editor.putString("CurrentPidGandharva" , ""+((EventsActivity)getActivity()).currentPidGandharva);
+                        editor.commit();
+                        Log.d(TAG , "Current latest pid in Shared prefrences is"+ ((EventsActivity)getActivity()).currentPidGandharva);
 
                         Data data = new Data();
                         data.setPostid(Integer.parseInt(pid));
@@ -195,7 +195,7 @@ public class FragmentTwo extends Fragment {
                 i.next();
             }// end of while
 
-        }
+        //}
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {

@@ -3,17 +3,12 @@ package college.root.viit2;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
@@ -24,9 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import android.provider.MediaStore.*;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,20 +27,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
+import college.root.viit2.GandharvaRecycler.CustomAdapter;
 import college.root.viit2.Realm.Data;
 import college.root.viit2.Realm.RealmHelper;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
-
 public class MainActivity extends AppCompatActivity {
 
     Realm realm;
@@ -61,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences.Editor editor ;
     StorageReference mstorageReference;
     String imageNameRealm;
+    String imageName = null;
+
+
 
 
     @Override
@@ -130,35 +127,26 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Pid is " + pid);
                         String title = dataSnapshot.child("Title").getValue().toString();
                         String desc = dataSnapshot.child("Desc").getValue().toString();
-                        mstorageReference.child("image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-
-                                imageNameRealm = downloadImage(uri);
-
-
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-
-
-                         currentPid = Integer.parseInt(pid);
+                        String imageUrl = dataSnapshot.child("Image").getValue().toString();
+                        Log.d(TAG, "onChildAdded: image url is "+imageUrl);
+                        currentPid = Integer.parseInt(pid);
                         Log.d(TAG , "Current latest pid is"+ currentPid);
                         editor.putString("CurrentPid" , ""+currentPid);
                         editor.commit();
                         Log.d(TAG , "Current latest pid in Shared prefrences is"+ currentPid);
 
 
+
+
+
                         Data data = new Data();
                         data.setPostid(Integer.parseInt(pid));
                         data.setDesc(desc);
                         data.setTitle(title);
+                        imageNameRealm  = downloadImage(imageUrl);
+
                         data.setImageName(imageNameRealm);
+                        Log.d(TAG, "onChildAdded: image name is "+imageNameRealm);
 
                         RealmHelper helper = new RealmHelper(realm);
 
@@ -220,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -248,57 +238,95 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String downloadImage(Uri uri) {
-        String imageName = null;
-        try {
-            Bitmap b = MediaStore.Images.Media.getBitmap(this.getContentResolver() , uri);
-            // /  BitmapDrawable drawable = (BitmapDrawable) imageButton.getDrawable();
+    private String downloadImage(String url) {
 
-            Log.d(TAG , "Bitmap created");
-            File sdCardDirectory = Environment.getExternalStorageDirectory();
-
-           imageName =System.currentTimeMillis()+".png";
-            File image = new File(sdCardDirectory, imageName);
+            Log.d(TAG , "In download method..");
 
 
-            Log.d(TAG , "image file created" +image);
-            boolean success = false;
 
-            // Encode the file as a PNG image.
-            FileOutputStream outStream;
-            try {
+            Picasso.with(this)
+                    .load(url)
+                    .into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            // loaded bitmap is here (bitmap)
 
-                outStream = new FileOutputStream(image);
-                b.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                            Log.d(TAG , "Bitmap created");
+                            File sdCardDirectory = Environment.getExternalStorageDirectory();
+
+                            imageName =System.currentTimeMillis()+".png";
+                            File image = new File(sdCardDirectory, imageName);
+
+
+                            Log.d(TAG , "image file created" +image);
+                            boolean success = false;
+
+                            // Encode the file as a PNG image.
+                            FileOutputStream outStream;
+                            try {
+
+                                outStream = new FileOutputStream(image);
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
         /* 100 to keep full quality of the image */
 
-                Log.d(TAG , " bitmap stored ");
-                outStream.flush();
-                outStream.close();
-                success = true;
+                                Log.d(TAG , " bitmap stored ");
+                                outStream.flush();
+                                outStream.close();
+                                success = true;
 
 
-            } catch (FileNotFoundException e) {
+                            } catch (FileNotFoundException e) {
 
-                Log.d(TAG , "Error "+e.getMessage());
-                e.printStackTrace();
-            } catch (IOException e) {
+                                Log.d(TAG , "Error "+e.getMessage());
+                                e.printStackTrace();
+                            } catch (IOException e) {
 
-                Log.d(TAG , "Error" +e.getMessage());
-                e.printStackTrace();
-            }
-            if (success) {
-                Toast.makeText(getApplicationContext(), "Image saved with success",
-                        Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "Check Phone Storage for saved image",
-                        Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Error during image saving", Toast.LENGTH_LONG).show();
-            }
-        }catch (IOException e){
-            Log.d(TAG , "Error "+e.getMessage());
-        }
+                                Log.d(TAG , "Error" +e.getMessage());
+                                e.printStackTrace();
+                            }
+                            if (success) {
+                                Toast.makeText(getApplicationContext(), "Image saved with success",
+                                        Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Check Phone Storage for saved image",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(),
+                                        "Error during image saving", Toast.LENGTH_LONG).show();
+                            }
+
+
+
+
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Drawable errorDrawable) {
+                            Log.d(TAG, "onBitmapFailed: " +errorDrawable);
+
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                        }
+                    });
+
+
+
+           /* URL u = new URL(url);
+            HttpURLConnection connec = (HttpURLConnection) u.openConnection();
+            connec.setDoInput(true);
+            connec.connect();
+            InputStream input = connec.getInputStream();
+            Bitmap b = BitmapFactory.decodeStream(input); */
+
+
+          //  Bitmap b = MediaStore.Images.Media.getBitmap(this.getContentResolver() ,uri );
+            // /  BitmapDrawable drawable = (BitmapDrawable) imageButton.getDrawable();
+
+
+
 
 
         return imageName;
@@ -314,25 +342,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public  void retriveImage(String path , String imageName){
 
-        try{
-
-            File file = new File(path , imageName );
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(file));
-            //imageLoad.setImageBitmap(b);
-            Log.d(TAG , "Image saved success");
-
-
-
-
-        }catch (FileNotFoundException e){
-            Log.d(TAG , "Error "+e.getMessage());
-        }
-
-
-
-    }
 
 
 }

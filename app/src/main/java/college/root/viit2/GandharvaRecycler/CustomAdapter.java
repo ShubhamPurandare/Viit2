@@ -20,6 +20,7 @@ import college.root.viit2.EventDetailsActivity;
 import college.root.viit2.GandharvaRecycler.MyHolder;
 import college.root.viit2.R;
 import college.root.viit2.Realm.Data;
+import college.root.viit2.Realm.PerceptionData;
 
 /**
  * Created by root on 25/11/16.
@@ -30,7 +31,9 @@ public class CustomAdapter extends RecyclerView.Adapter<MyHolder> {
     ArrayList<Data> arrayList;
     String TAG = "Test";
 
-    String path = "/storage/emulated/0/";
+    String path = "/storage/emulated/0";
+
+
 
 
     public CustomAdapter(ArrayList<Data> arrayList, Context context) {

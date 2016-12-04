@@ -11,7 +11,15 @@ public class Data extends RealmObject {
 
     @PrimaryKey
     int postid;
-    String title, desc , imageName;
+    String title, desc , imageName , date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Data() {
     }

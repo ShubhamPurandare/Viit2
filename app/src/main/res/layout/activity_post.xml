@@ -25,8 +25,33 @@
             android:paddingRight="16dp"
             android:paddingTop="16dp"
             tools:context=".MainActivity">
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton
+                    android:id="@+id/radio_technical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GANDHARVA"
+                android:onClick="onRadioButtonClicked"
+                android:paddingLeft="10dp"/>
 
+            <RadioButton android:id="@+id/radio_cultural"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PERCEPTION"
+                android:onClick="onRadioButtonClicked"
+                android:paddingLeft="10dp"/>
+            </RadioGroup>
 
+            <ImageButton
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/imagePost"
+                android:layout_gravity="fill"
+                android:layout_margin="10dp"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -57,9 +82,10 @@
                 android:id="@+id/submit_button"
                 android:layout_alignParentBottom="true"
                 android:background="#E53935"        />
+
+
+
         </LinearLayout>
-
-
     </ScrollView>
 
 
