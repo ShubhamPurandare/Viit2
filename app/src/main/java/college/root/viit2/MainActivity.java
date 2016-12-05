@@ -88,14 +88,14 @@ public class MainActivity extends AppCompatActivity {
         final RealmHelper helper = new RealmHelper(realm);
         helper.retrive();
         Log.d(TAG , "Helper set");
-        customAdapter = new CustomAdapter(helper.refresh() , this);
+        customAdapter = new CustomAdapter(helper.refreshPerception(), null , this);
         recyclerView.setAdapter(customAdapter);
         Log.d(TAG , "Adapter set");
        realmChangeListener = new RealmChangeListener() {
             @Override
             public void onChange() {
                 Log.d(TAG , "Realm changed");
-                customAdapter = new CustomAdapter(helper.refresh() , MainActivity.this);
+                customAdapter = new CustomAdapter(helper.refreshPerception() ,null, MainActivity.this);
                 recyclerView.setAdapter(customAdapter);
                 onCreateNotification();
             }

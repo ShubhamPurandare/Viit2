@@ -8,15 +8,16 @@
 
     <application
         android:allowBackup="true"
+        android:allowClearUserData="true"
+        android:fullBackupOnly="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:allowClearUserData="true"
-        android:fullBackupOnly="false">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".signin"></activity>
+        <activity android:name=".form"></activity>
 
-        </activity>
         <activity android:name=".PostActivity" />
         <activity android:name=".EventDetailsActivity" />
         <activity

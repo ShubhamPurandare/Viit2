@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,12 +40,64 @@ public class EventsActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
-
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+
+
+
+
+
+            Log.d(TAG, "run: In background thread");
+
+            SharedPreferences sharedPreferences = getSharedPreferences("ShaPreferences1", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+
+            boolean  firstTime=sharedPreferences.getBoolean("first", true);
+
+            firebaseAuth= FirebaseAuth.getInstance();
+
+            FirebaseUser user=firebaseAuth.getCurrentUser();
+
+            Log.d(TAG, "run: checking conditions");
+
+            if(firstTime || user==null) {
+                editor.putBoolean("first",false);
+                //For commit the changes, Use either editor.commit(); or  editor.apply();.
+                editor.commit();
+                Intent intent = new Intent(EventsActivity.this, signin.class);
+                Log.d(TAG, "run: user is null");
+                startActivity(intent);
+                finish();
+            }else {
+                Intent intent = new Intent(EventsActivity.this, EventsActivity.class);
+                Log.d(TAG, "run: user is not null");
+                startActivity(intent);
+                finish();
+            }
+            // After 5 seconds redirect to another intent
+            //Intent i=new Intent(getBaseContext(),FirstScreen.class);
+            //startActivity(i);
+
+            //Remove activity
+
+
+
+
+
+
+
+
+
+
+
+
+
         sharedPreferences = getSharedPreferences("userInfo" , Context.MODE_PRIVATE);
+        sharedPreferences1 = getSharedPreferences("userInfoPerception" , MODE_PRIVATE);
         Log.d(TAG, "onCreate:  in onCreate");
 
 

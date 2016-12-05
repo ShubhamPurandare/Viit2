@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "456855781157",
-    "firebase_url": "https://fir-50934.firebaseio.com",
-    "project_id": "fir-50934",
-    "storage_bucket": "fir-50934.appspot.com"
+    "project_number": "975273392026",
+    "firebase_url": "https://finalone-c05f6.firebaseio.com",
+    "project_id": "finalone-c05f6",
+    "storage_bucket": "finalone-c05f6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:456855781157:android:83ab5de0c8aff6fc",
+        "mobilesdk_app_id": "1:975273392026:android:83ab5de0c8aff6fc",
         "android_client_info": {
           "package_name": "college.root.viit2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "456855781157-f0nnofb952g2gsgtv7v52tmuqapd6f2r.apps.googleusercontent.com",
+          "client_id": "975273392026-7vs2ejnc075saq0k4d0hm7v5uldb9a9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "college.root.viit2",
+            "certificate_hash": "B1C879102D81FFA644DB9A383519131C96B0DA4F"
+          }
+        },
+        {
+          "client_id": "975273392026-omijjd42l8ku21gn9rk1nq9caoq04nr0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCgTDBjFU4P_fcY6sLrvMbvcNCTgI0Q-Co"
+          "current_key": "AIzaSyAhoHOhJP2dZfjlAYrJ75VoGit6sClKNYw"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975273392026-omijjd42l8ku21gn9rk1nq9caoq04nr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

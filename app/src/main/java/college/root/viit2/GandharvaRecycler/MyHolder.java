@@ -32,6 +32,7 @@ public class MyHolder extends RecyclerView.ViewHolder {
         imageView = (ImageView)itemView.findViewById(R.id.imageLoad);
         btnDetails = (Button)itemView.findViewById(R.id.btnDetails);
         tvTime = (TextView)itemView.findViewById(R.id.tvTime);
+        imageView.setVisibility(View.GONE);
 
         this.context = context;
 

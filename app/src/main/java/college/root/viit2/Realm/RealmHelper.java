@@ -121,7 +121,7 @@ public class RealmHelper {
     // Code below is for PerceptionData
 
 
-    public boolean save(final PerceptionData pdata) {
+    public boolean saveP(final PerceptionData pdata) {
 
         if (pdata == null) {
             saved = false;
@@ -170,13 +170,17 @@ public class RealmHelper {
 
     public boolean checkPidExists( int pid) {
 
+        query =null;
         query = realm.where(PerceptionData.class);
         query.equalTo("postid" , pid);
+        for (int i = 0 ; i< Presults.size() ; i++ ){
+            Log.d("Test", "check: "+ Presults.get(i));
+        }
         Presults = realm.where(PerceptionData.class).equalTo("postid" , pid).findAll();
 
 
         //  pid = results.first();
-        if (Presults!=null){
+        if (query!=null){
             return true;
         }else {
             return  false;

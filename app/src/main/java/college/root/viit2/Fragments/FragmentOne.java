@@ -58,7 +58,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class FragmentOne extends Fragment { // fragment for gandharva
     Realm realm;
     RecyclerView recyclerView ;
-    CustomAdapter customAdapter;
+    CustomAdapter customAdapterP;
     RealmChangeListener realmChangeListener ;
     DatabaseReference mDatabase;
     String TAG = "Test";
@@ -107,18 +107,18 @@ public class FragmentOne extends Fragment { // fragment for gandharva
         Realm.setDefaultConfiguration(configuration);
         Log.d(TAG , "Realm set");
         realm = Realm.getDefaultInstance();
-        final RealmHelper helper = new RealmHelper(realm);
-        helper.retrive();
+        final RealmHelper helperP = new RealmHelper(realm);
+        helperP.retrivePerception();
         Log.d(TAG , "Helper set");
-        customAdapter = new CustomAdapter(helper.refresh() , getContext());
-        recyclerView.setAdapter(customAdapter);
+        customAdapterP = new CustomAdapter(helperP.refreshPerception() ,null ,  getContext());
+        recyclerView.setAdapter(customAdapterP);
         Log.d(TAG , "Adapter set");
         realmChangeListener = new RealmChangeListener() {
             @Override
             public void onChange() {
                 Log.d(TAG , "Realm changed");
-                customAdapter = new CustomAdapter(helper.refresh() , getContext());
-                recyclerView.setAdapter(customAdapter);
+                customAdapterP = new CustomAdapter(helperP.refreshPerception() ,null,  getContext());
+                recyclerView.setAdapter(customAdapterP);
                 onCreateNotification();
             }
         };
@@ -160,7 +160,7 @@ public class FragmentOne extends Fragment { // fragment for gandharva
                     RealmHelper helper = new RealmHelper(realm);
             
                     boolean exists = helper.checkPidExists(Integer.parseInt(pid));
-                    if (exists){
+                    if (!exists){
                         Log.d(TAG, "onChildAdded: Pid exits" +pid);
                     }else {
                         Log.d(TAG, "onChildAdded: Pid doesnot exists ");
@@ -175,7 +175,7 @@ public class FragmentOne extends Fragment { // fragment for gandharva
                         Log.d(TAG, "onChildAdded: image name is "+imageNameRealm);
 
 
-                        if (helper.save(perceptionData)){
+                        if (helper.saveP(perceptionData)){
 
                         }else {
                             Log.d(TAG , "Post with pid "+ pid + " already exists in realm");
