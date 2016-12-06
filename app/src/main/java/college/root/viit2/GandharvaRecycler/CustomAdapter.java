@@ -38,9 +38,9 @@ public class CustomAdapter extends RecyclerView.Adapter<MyHolder> {
 
 
 
-    public CustomAdapter(ArrayList<PerceptionData> arrayListP, ArrayList<Data> arrayList, Context context) {
+    public CustomAdapter( ArrayList<Data> arrayList, Context context) {
         this.arrayList = arrayList;
-        this.arrayListP = arrayListP;
+
         this.context = context;
     }
 
@@ -52,8 +52,6 @@ public class CustomAdapter extends RecyclerView.Adapter<MyHolder> {
 
     @Override
     public void onBindViewHolder(final MyHolder holder, int position) {
-
-        if (arrayListP==null){ // adapter called for Gandharva data .
 
 
             Data data = arrayList.get(position);
@@ -89,83 +87,26 @@ public class CustomAdapter extends RecyclerView.Adapter<MyHolder> {
                     Log.d(TAG , "Image saved success");
 
                 }else {
+                    holder.imageView.setVisibility(View.GONE);
 
                     Log.d(TAG, "image name is null" +data.getImageName());
                 }
             }catch (FileNotFoundException e){
                 Log.d(TAG , "Error "+e.getMessage());
             }
-
-
-
-
-
-
-        }else{
-
-            PerceptionData pdata = arrayListP.get(position);
-            holder.tvTitle.setText(pdata.getTitle());
-            holder.tvDesc.setText(pdata.getDesc());
-            Calendar c = Calendar.getInstance();
-            holder.tvTime.setText(pdata.getDate());
-            holder.btnDetails.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-
-                    context.startActivity(new Intent(context , EventDetailsActivity.class));
-
-                }
-            });
-
-
-            try{
-
-
-                if(pdata.getImageName()!=null){
-
-                    Log.d(TAG , "image name not null");
-                    Log.d(TAG, "onBindViewHolder: Stored Path is "+path);
-
-
-                    File file = new File(path , pdata.getImageName() );
-                    Bitmap b = BitmapFactory.decodeStream(new FileInputStream(file));
-                    //imageLoad.setImageBitmap(b);
-                    holder.imageView.setImageBitmap(b);
-                    Log.d(TAG , "Image saved success");
-
-                }else {
-
-                    Log.d(TAG, "image name is null" +pdata.getImageName());
-                }
-            }catch (FileNotFoundException e){
-                Log.d(TAG , "Error "+e.getMessage());
-            }
-
-
-
-
         }
 
 
 
 
 
-
-
-
-
-
-
-    }
-
     @Override
     public int getItemCount() {
 
         if(arrayList == null){
-            return  0 ;
+            return  0;
         }else{
-            return arrayList.size();
+            return  arrayList.size() ;
         }
 
 

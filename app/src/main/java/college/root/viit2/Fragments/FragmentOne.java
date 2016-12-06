@@ -86,7 +86,7 @@ public class FragmentOne extends Fragment { // fragment for gandharva
         super.onViewCreated(view, savedInstanceState);
 
 
-        sharedPreferences = getActivity().getSharedPreferences("userInfo" , Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("userInfoPerception" , Context.MODE_PRIVATE);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("PERCEPTION");
         mstorageReference = FirebaseStorage.getInstance().getReference();
 

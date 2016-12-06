@@ -187,7 +187,7 @@ public class PostActivity extends AppCompatActivity {
 
                 Log.d(TAG, " In startAdding ");
                 final SimpleDateFormat date = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss ");
-                if (!TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(desc_val) && mImageUri !=null && checkBoxIsChecked) {
+                if (!TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(desc_val)  && checkBoxIsChecked) {
                     mProgress.setMessage("Adding Event...");
                     mProgress.show();
                     mProgress.setCanceledOnTouchOutside(false);

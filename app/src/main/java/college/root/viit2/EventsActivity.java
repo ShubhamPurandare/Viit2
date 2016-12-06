@@ -47,57 +47,8 @@ public class EventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
 
-
-
-
-
-            Log.d(TAG, "run: In background thread");
-
-            SharedPreferences sharedPreferences = getSharedPreferences("ShaPreferences1", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-
-            boolean  firstTime=sharedPreferences.getBoolean("first", true);
-
-            firebaseAuth= FirebaseAuth.getInstance();
-
-            FirebaseUser user=firebaseAuth.getCurrentUser();
-
-            Log.d(TAG, "run: checking conditions");
-
-            if(firstTime || user==null) {
-                editor.putBoolean("first",false);
-                //For commit the changes, Use either editor.commit(); or  editor.apply();.
-                editor.commit();
-                Intent intent = new Intent(EventsActivity.this, signin.class);
-                Log.d(TAG, "run: user is null");
-                startActivity(intent);
-                finish();
-            }else {
-                Intent intent = new Intent(EventsActivity.this, EventsActivity.class);
-                Log.d(TAG, "run: user is not null");
-                startActivity(intent);
-                finish();
-            }
-            // After 5 seconds redirect to another intent
-            //Intent i=new Intent(getBaseContext(),FirstScreen.class);
-            //startActivity(i);
-
-            //Remove activity
-
-
-
-
-
-
-
-
-
-
-
-
-
-        sharedPreferences = getSharedPreferences("userInfo" , Context.MODE_PRIVATE);
-        sharedPreferences1 = getSharedPreferences("userInfoPerception" , MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("userInfoGandharva" , Context.MODE_PRIVATE);
+        sharedPreferences1 = getSharedPreferences("userInfoPerception" , Context.MODE_PRIVATE);
         Log.d(TAG, "onCreate:  in onCreate");
 
 
@@ -147,16 +98,9 @@ public class EventsActivity extends AppCompatActivity {
         });
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-
         setupViewPager(mViewPager);
-
-
-
-
-
         tabLayout.setupWithViewPager(mViewPager);
 
 
@@ -192,7 +136,7 @@ public class EventsActivity extends AppCompatActivity {
         if (id == R.id.add) {
             pid = sharedPreferences.getString("CurrentPidGandharva" ,"0");
             currentPidGandharva = Integer.parseInt(pid);
-            pid = sharedPreferences.getString("CurrentPidPerception" ,"0");
+            pid = sharedPreferences1.getString("CurrentPidPerception" ,"0");
             currentPidPerception = Integer.parseInt(pid);
             Log.d(TAG, "onOptionsItemSelected:  Pid recieved of gandharva from shared pref is "+currentPidGandharva);
             Log.d(TAG, "onOptionsItemSelected: Pid recieved of perception from shared pref is"+currentPidPerception);

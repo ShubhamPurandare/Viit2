@@ -86,7 +86,7 @@ public class FragmentTwo extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        sharedPreferences1 = getActivity().getSharedPreferences("userInfo" , Context.MODE_PRIVATE);
+        sharedPreferences1 = getActivity().getSharedPreferences("userInfoGandharva" , Context.MODE_PRIVATE);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("GANDHARVA");
         mstorageReference = FirebaseStorage.getInstance().getReference();
 

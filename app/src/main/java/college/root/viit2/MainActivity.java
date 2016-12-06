@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,18 +46,9 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
 public class MainActivity extends AppCompatActivity {
 
-    Realm realm;
-    RecyclerView recyclerView ;
-    CustomAdapter customAdapter;
-    RealmChangeListener realmChangeListener ;
-    DatabaseReference mDatabase;
+
+    FirebaseAuth firebaseAuth;
     String TAG = "Test";
-    int currentPid =0 ;
-    SharedPreferences sharedPreferences ;
-    SharedPreferences.Editor editor ;
-    StorageReference mstorageReference;
-    String imageNameRealm;
-    String imageName = null;
 
 
 
@@ -64,280 +57,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sharedPreferences = getSharedPreferences("userInfo" , Context.MODE_PRIVATE);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ALLEvents");
-        mstorageReference = FirebaseStorage.getInstance().getReference();
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+        Log.d(TAG, "run: In background thread");
 
-        editor = sharedPreferences.edit();
+        SharedPreferences sharedPreferences = getSharedPreferences("ShaPreferences1", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
 
-        String pid = sharedPreferences.getString("CurrentPid" , "0");
-        currentPid = Integer.parseInt(pid);
-        Log.d(TAG , "Latest pid obtained by shared prefs is :" +currentPid);
+        boolean  firstTime=sharedPreferences.getBoolean("first", true);
 
+        firebaseAuth= FirebaseAuth.getInstance();
 
-        RealmConfiguration configuration = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().schemaVersion(4).build();
-        Realm.setDefaultConfiguration(configuration);
-        Log.d(TAG , "Realm set");
-        realm = Realm.getDefaultInstance();
-        final RealmHelper helper = new RealmHelper(realm);
-        helper.retrive();
-        Log.d(TAG , "Helper set");
-        customAdapter = new CustomAdapter(helper.refreshPerception(), null , this);
-        recyclerView.setAdapter(customAdapter);
-        Log.d(TAG , "Adapter set");
-       realmChangeListener = new RealmChangeListener() {
-            @Override
-            public void onChange() {
-                Log.d(TAG , "Realm changed");
-                customAdapter = new CustomAdapter(helper.refreshPerception() ,null, MainActivity.this);
-                recyclerView.setAdapter(customAdapter);
-                onCreateNotification();
-            }
-        };
+        FirebaseUser user=firebaseAuth.getCurrentUser();
 
-        realm.addChangeListener(realmChangeListener);
+        Log.d(TAG, "run: checking conditions");
 
-        mDatabase.keepSynced(true);
-        mDatabase.addChildEventListener(childEventListener);
+        if(firstTime || user==null) {
+            editor.putBoolean("first",false);
+            //For commit the changes, Use either editor.commit(); or  editor.apply();.
+            editor.commit();
+            Intent intent = new Intent(MainActivity.this, signin.class);
+            Log.d(TAG, "run: user is null");
+            startActivity(intent);
+            finish();
+        }else {
+            Intent intent = new Intent(MainActivity.this, EventsActivity.class);
+            Log.d(TAG, "run: user is not null");
+            startActivity(intent);
+            finish();
+        }
+        // After 5 seconds redirect to another intent
+        //Intent i=new Intent(getBaseContext(),FirstScreen.class);
+        //startActivity(i);
 
+        //Remove activity
 
 
 
     }// end of onCreate method
-
-
-     ChildEventListener childEventListener = new ChildEventListener() {
-         @Override
-         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-             Log.d(TAG , "in childevent listener");
-             long count = dataSnapshot.getChildrenCount();
-             Log.d(TAG , "Childresn count is :" +count);
-
-             Iterator i = dataSnapshot.getChildren().iterator();
-
-             while (i.hasNext()){
-                    try {
-                        String pid = dataSnapshot.child("Post_id").getValue().toString();
-                        Log.d(TAG, "Pid is " + pid);
-                        String title = dataSnapshot.child("Title").getValue().toString();
-                        String desc = dataSnapshot.child("Desc").getValue().toString();
-                        String imageUrl = dataSnapshot.child("Image").getValue().toString();
-                        Log.d(TAG, "onChildAdded: image url is "+imageUrl);
-                        currentPid = Integer.parseInt(pid);
-                        Log.d(TAG , "Current latest pid is"+ currentPid);
-                        editor.putString("CurrentPid" , ""+currentPid);
-                        editor.commit();
-                        Log.d(TAG , "Current latest pid in Shared prefrences is"+ currentPid);
-
-
-
-
-
-                        Data data = new Data();
-                        data.setPostid(Integer.parseInt(pid));
-                        data.setDesc(desc);
-                        data.setTitle(title);
-                        imageNameRealm  = downloadImage(imageUrl);
-
-                        data.setImageName(imageNameRealm);
-                        Log.d(TAG, "onChildAdded: image name is "+imageNameRealm);
-
-                        RealmHelper helper = new RealmHelper(realm);
-
-                 if (helper.save(data)){
-
-                 }else {
-                     Log.d(TAG , "Post with pid "+ pid + " already exists in realm");
-
-                 }
-                    }catch (Exception e){
-                            Log.d(TAG , "Exception caught is "+e.getMessage());
-                    }
-
-                 i.next();
-             }// end of while
-
-         }
-
-         @Override
-         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-         }
-
-         @Override
-         public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-         }
-
-         @Override
-         public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-         }
-
-         @Override
-         public void onCancelled(DatabaseError databaseError) {
-
-         }
-     };
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.add) {
-           Intent intent = new Intent(MainActivity.this, PostActivity.class);
-           intent.putExtra("CurrentPid" , currentPid);
-            startActivity(intent);
-            return true;
-        }
-
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
-    private void onCreateNotification() {
-        Intent intent = new Intent(this, MainActivity.class);
-        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(getApplicationContext());
-        taskStackBuilder.addParentStack(MainActivity.class);
-        taskStackBuilder.addNextIntent(intent);
-        PendingIntent pendingIntent=taskStackBuilder.getPendingIntent(123, PendingIntent.FLAG_UPDATE_CURRENT);
-        String abc =  "Check out the new Event added .... ";
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setContentTitle("New entry Added!");
-        mBuilder.setContentText(abc);
-        mBuilder.setAutoCancel(true);
-        mBuilder.setSmallIcon(R.drawable.notify);
-        mBuilder.setContentIntent(pendingIntent);
-        //mBuilder.setWhen(System.currentTimeMillis());
-        Notification notification = mBuilder.build();
-        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        nm.notify(1, notification);
-
-    }
-
-
-    private String downloadImage(String url) {
-
-            Log.d(TAG , "In download method..");
-
-
-
-            Picasso.with(this)
-                    .load(url)
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            // loaded bitmap is here (bitmap)
-
-                            Log.d(TAG , "Bitmap created");
-                            File sdCardDirectory = Environment.getExternalStorageDirectory();
-
-                            imageName =System.currentTimeMillis()+".png";
-                            File image = new File(sdCardDirectory, imageName);
-
-
-                            Log.d(TAG , "image file created" +image);
-                            boolean success = false;
-
-                            // Encode the file as a PNG image.
-                            FileOutputStream outStream;
-                            try {
-
-                                outStream = new FileOutputStream(image);
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-        /* 100 to keep full quality of the image */
-
-                                Log.d(TAG , " bitmap stored ");
-                                outStream.flush();
-                                outStream.close();
-                                success = true;
-
-
-                            } catch (FileNotFoundException e) {
-
-                                Log.d(TAG , "Error "+e.getMessage());
-                                e.printStackTrace();
-                            } catch (IOException e) {
-
-                                Log.d(TAG , "Error" +e.getMessage());
-                                e.printStackTrace();
-                            }
-                            if (success) {
-                                Toast.makeText(getApplicationContext(), "Image saved with success",
-                                        Toast.LENGTH_LONG).show();
-                                Toast.makeText(getApplicationContext(), "Check Phone Storage for saved image",
-                                        Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(),
-                                        "Error during image saving", Toast.LENGTH_LONG).show();
-                            }
-
-
-
-
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-                            Log.d(TAG, "onBitmapFailed: " +errorDrawable);
-
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    });
-
-
-
-           /* URL u = new URL(url);
-            HttpURLConnection connec = (HttpURLConnection) u.openConnection();
-            connec.setDoInput(true);
-            connec.connect();
-            InputStream input = connec.getInputStream();
-            Bitmap b = BitmapFactory.decodeStream(input); */
-
-
-          //  Bitmap b = MediaStore.Images.Media.getBitmap(this.getContentResolver() ,uri );
-            // /  BitmapDrawable drawable = (BitmapDrawable) imageButton.getDrawable();
-
-
-
-
-
-        return imageName;
-
-
-
-
-
-    }// end of download image
-
-
 
 
 
