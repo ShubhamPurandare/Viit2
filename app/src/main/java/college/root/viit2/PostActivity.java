@@ -28,13 +28,15 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import id.zelory.compressor.Compressor;
+//import id.zelory.compressor.Compressor;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -52,6 +54,7 @@ public class PostActivity extends AppCompatActivity {
     ImageButton mpostImage;
     RadioButton rbPerception , rbGandharva;
     int currentPidToPost = 0;
+    Uri resultUri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +64,9 @@ public class PostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         currentPidGandharva = intent.getIntExtra("CurrentPidGandharva" , 0);
-        Log.d(TAG , "Curent recieved recent pid is "+currentPidGandharva);
+        Log.d(TAG , "Curent recieved Gandharva pid is "+currentPidGandharva);
         currentPidPerception = intent.getIntExtra("CurrentPidPerception" , 0);
+        Log.d(TAG , "Curent recieved Perception  pid is "+currentPidPerception);
 
         mAddTitle = (EditText) findViewById(R.id.editText_title);
         mAddDesc = (EditText) findViewById(R.id.editText_desc);
@@ -105,12 +109,33 @@ public class PostActivity extends AppCompatActivity {
         if (requestCode==GALLERY_REQUEST && resultCode==RESULT_OK)
         {
             mImageUri=data.getData();
+            CropImage.activity(mImageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this);
+
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    resultUri = result.getUri();
+                    mpostImage.setImageURI(resultUri);
+                    Log.d(TAG , "Result uri success");
+
+
+
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Exception error = result.getError();
+
+                    Log.d(TAG , "Result uri error");
+                }
+            }
+
+
             Picasso.with(getApplicationContext()).load(mImageUri).resize(500,400).centerCrop().into(new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     try {
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
                         mpostImage.setImageBitmap(bitmap);
                     }catch (Exception e){
                         Log.d(TAG, "onBitmapLoaded: Exception caught in compressing image "+e.getMessage());
@@ -138,6 +163,9 @@ public class PostActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+
+
 
     public static String random() {
         Random generator = new Random();

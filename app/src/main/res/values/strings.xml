@@ -6,4 +6,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="Branch">
+        <item>Computer</item>
+        <item>ENTC</item>
+        <item>Mechanical</item>
+        <item>Civil</item>
+    </string-array>
+
+
+    <string-array name="Year">
+        <item>FE</item>
+        <item>SE</item>
+        <item>TE</item>
+        <item>BE</item>
+    </string-array>
 </resources>

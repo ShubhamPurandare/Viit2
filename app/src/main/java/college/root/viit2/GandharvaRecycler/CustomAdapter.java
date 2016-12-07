@@ -59,16 +59,8 @@ public class CustomAdapter extends RecyclerView.Adapter<MyHolder> {
             holder.tvDesc.setText(data.getDesc());
             Calendar c = Calendar.getInstance();
             holder.tvTime.setText(data.getDate());
+            holder.tvPid.setText(data.getPostid()+"");
 
-            holder.btnDetails.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-
-                    context.startActivity(new Intent(context , EventDetailsActivity.class));
-
-                }
-            });
 
 
             try{

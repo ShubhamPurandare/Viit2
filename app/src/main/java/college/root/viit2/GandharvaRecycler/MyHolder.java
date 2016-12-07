@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import college.root.viit2.EventDetailsActivity;
 import college.root.viit2.R;
+import college.root.viit2.Realm.Data;
+import college.root.viit2.Realm.RealmHelper;
 
 /**
  * Created by root on 26/11/16.
@@ -19,11 +21,12 @@ import college.root.viit2.R;
 public class MyHolder extends RecyclerView.ViewHolder {
 
 
-    TextView tvTitle , tvDesc , tvTime;
+    TextView tvTitle , tvDesc , tvTime , tvPid;
     ImageView imageView;
-    Button btnDetails;
     Context context;
     String TAG ="Test";
+    RealmHelper helper;
+    Data data;
 
 
     public MyHolder(final Context context, View itemView) {
@@ -32,8 +35,8 @@ public class MyHolder extends RecyclerView.ViewHolder {
         tvDesc = (TextView) itemView.findViewById(R.id.tvdesc);
         tvTitle = (TextView) itemView.findViewById(R.id.tvtitle);
         imageView = (ImageView)itemView.findViewById(R.id.imageLoad);
-        btnDetails = (Button)itemView.findViewById(R.id.btnDetails);
         tvTime = (TextView)itemView.findViewById(R.id.tvTime);
+        tvPid = (TextView)itemView.findViewById(R.id.pid);
         this.context = context;
 
 
@@ -42,9 +45,28 @@ public class MyHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: Title is "+tvTitle.getText().toString());
-                Log.d(TAG, "onClick: Desc is "+tvDesc.getText().toString());
-                context.startActivity(new Intent(context , EventDetailsActivity.class));
+                data = new Data();
+                data= null;
+                data = helper.retriveFromPid(Integer.parseInt(tvPid.getText().toString()));
+                Log.d(TAG, "onClick: data reurned something");
+                if (data != null){
+
+                    String title = data.getTitle();
+                    String desc = data.getDesc();
+                    Log.d(TAG, "onClick: Title is "+title);
+                    Log.d(TAG, "onClick: Desc is "+desc);
+                    Log.d(TAG, "onClick: Pid is "+tvPid.getText().toString());
+
+                    Intent i = new Intent(context , EventDetailsActivity.class);
+                    i.putExtra("Title" , title);
+                    i.putExtra("Desc" , desc);
+                    context.startActivity(i);
+
+
+                }else{
+                    Log.d(TAG, "onClick: data is null");
+                }
+
 
 
             }

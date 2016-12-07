@@ -41,10 +41,12 @@
         android:layout_marginTop="53dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NEXT"
+        android:text="Proceed"
         android:id="@+id/button"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/whiteColor"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="next"/>

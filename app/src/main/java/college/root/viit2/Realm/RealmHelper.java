@@ -21,6 +21,7 @@ public class RealmHelper {
     RealmResults<Data> results = null;
     Boolean saved = null;
     Boolean saved1 = null;
+    Boolean saved2 = null;
     RealmResults<PerceptionData> Presults = null;
     RealmQuery<PerceptionData> query = null;
     RealmQuery<Data> queryData = null;
@@ -28,6 +29,15 @@ public class RealmHelper {
 
     public RealmHelper(Realm realm) {
         this.realm = realm;
+    }
+
+
+    public Data retriveFromPid(int pid){
+        Log.d(TAG, "retriveFromPid: method called");
+        Data data  = realm.where(Data.class).equalTo("postid" , pid).findFirst();
+
+        return data;
+
     }
 
 
@@ -78,6 +88,7 @@ public class RealmHelper {
 
         results = realm.where(Data.class).findAll();
         results.sort("postid", Sort.DESCENDING);
+
 
     }
 
@@ -185,6 +196,37 @@ public class RealmHelper {
         }else {
             return  false;
         }
+    }
+
+
+    public boolean saveUserInfo(final  UserInfo userInfo){
+        if (userInfo == null) {
+            saved2 = false;
+
+        } else {
+
+
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+
+
+                    try {
+
+                        UserInfo userInfo1 = realm.copyToRealm(userInfo);
+                        saved2 = true;
+
+                    } catch (RealmException r) {
+                        saved2 = false;
+                    }
+                }
+            });
+
+
+        }
+
+        return saved;
+
     }
 
 

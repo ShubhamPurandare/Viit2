@@ -1,5 +1,6 @@
 package college.root.viit2;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -33,6 +35,7 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    ProgressDialog mprogress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +86,9 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
 
             firebaseAuth= FirebaseAuth.getInstance();
             FirebaseUser user=firebaseAuth.getCurrentUser();
-
+            mprogress = new ProgressDialog(this);
+            mprogress.setMessage("Please wait while we sign in ....");
+            mprogress.show();
             if(result.isSuccess()){
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
@@ -95,8 +100,9 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
 
             }
             else
+            mprogress.dismiss();
                 Log.d(TAG, "Google Login Failed");
-                //Toast.makeText(getApplicationContext(),"Google login failed ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Google login failed ",Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -109,6 +115,7 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:oncomplete: " + task.isSuccessful());
+                        mprogress.dismiss();
                     }
                 });
     }

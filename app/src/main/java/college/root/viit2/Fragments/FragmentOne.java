@@ -42,6 +42,7 @@ import java.util.Iterator;
 import college.root.viit2.EventsActivity;
 import college.root.viit2.GandharvaRecycler.CustomAdapter;
 import college.root.viit2.MainActivity;
+import college.root.viit2.PerceptionRecycler.AdapterP;
 import college.root.viit2.R;
 import college.root.viit2.Realm.PerceptionData;
 import college.root.viit2.Realm.RealmHelper;
@@ -58,7 +59,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class FragmentOne extends Fragment { // fragment for gandharva
     Realm realm;
     RecyclerView recyclerView ;
-    CustomAdapter customAdapterP;
+    AdapterP AdapterP;
     RealmChangeListener realmChangeListener ;
     DatabaseReference mDatabase;
     String TAG = "Test";
@@ -110,15 +111,15 @@ public class FragmentOne extends Fragment { // fragment for gandharva
         final RealmHelper helperP = new RealmHelper(realm);
         helperP.retrivePerception();
         Log.d(TAG , "Helper set");
-        customAdapterP = new CustomAdapter(helperP.refreshPerception() ,null ,  getContext());
-        recyclerView.setAdapter(customAdapterP);
+        AdapterP = new AdapterP(helperP.refreshPerception() ,  getContext());
+        recyclerView.setAdapter(AdapterP);
         Log.d(TAG , "Adapter set");
         realmChangeListener = new RealmChangeListener() {
             @Override
             public void onChange() {
                 Log.d(TAG , "Realm changed");
-                customAdapterP = new CustomAdapter(helperP.refreshPerception() ,null,  getContext());
-                recyclerView.setAdapter(customAdapterP);
+                AdapterP = new AdapterP(helperP.refreshPerception() ,  getContext());
+                recyclerView.setAdapter(AdapterP);
                 onCreateNotification();
             }
         };

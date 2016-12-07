@@ -5,36 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="25dp"
-    android:elevation="100dp"
-
+    android:elevation="60dp"
     android:background="@android:color/holo_blue_light">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:orientation="vertical"
-        android:background="#2979ff">
 
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:elevation="20dp"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        >
 
 
-       <ImageView
-           android:layout_width="match_parent"
-           android:layout_height="200dp"
-           android:layout_margin="10dp"
-           android:id="@+id/imageLoad"
-           android:layout_gravity="fill"
-           android:src="@mipmap/ic_launcher"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            android:id="@+id/imageP"
+            android:layout_gravity="fill"
+            android:src="@mipmap/ic_launcher"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvtitle"
+            android:id="@+id/tvtitleP"
             android:padding="10dp"
             android:textStyle="bold"
             android:textSize="16dp"
@@ -42,48 +35,49 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvdesc"
+            android:id="@+id/tvdescP"
             android:padding="10dp"
             android:text="Event Desc goes here"/>
         <LinearLayout
             android:id="@+id/LayoutLike"
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="50dp">
 
             <TextView
-                android:id="@+id/TvLike"
+                android:id="@+id/TvLikeP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RSVP"
-                android:layout_gravity="center"
-                android:layout_marginLeft="80dp"
+                android:text="LIKE"
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:paddingLeft="50dp"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/btnDetailsP"
+                android:text="Register "
+                tools:background="@color/cardview_light_background" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:orientation="horizontal">
+            android:layout_height="20dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/tvTime"
+                android:id="@+id/tvTimeP"
                 android:text="Time"
                 android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/pid"/>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:orientation="vertical"
-            android:background="#2979ff">
+            android:background="@color/colorPrimaryDark">
 
         </LinearLayout>
 

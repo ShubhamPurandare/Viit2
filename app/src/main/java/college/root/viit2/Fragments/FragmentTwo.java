@@ -110,14 +110,14 @@ public class FragmentTwo extends Fragment {
         final RealmHelper helper = new RealmHelper(realm);
         helper.retrive();
         Log.d(TAG , "Helper set");
-        customAdapter = new CustomAdapter(null ,helper.refresh() , getContext());
+        customAdapter = new CustomAdapter(helper.refresh() , getContext());
         recyclerView.setAdapter(customAdapter);
         Log.d(TAG , "Adapter set");
         realmChangeListener = new RealmChangeListener() {
             @Override
             public void onChange() {
                 Log.d(TAG , "Realm changed");
-                customAdapter = new CustomAdapter(null , helper.refresh() , getContext());
+                customAdapter = new CustomAdapter( helper.refresh() , getContext());
                 recyclerView.setAdapter(customAdapter);
                 onCreateNotification();
             }

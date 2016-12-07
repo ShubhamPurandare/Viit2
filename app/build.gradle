@@ -5,8 +5,9 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
     defaultConfig {
+        multiDexEnabled true
         applicationId "college.root.viit2"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -14,7 +15,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -26,7 +27,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.google.firebase:firebase-crash:9.8.0'
@@ -44,11 +45,13 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:9.8.0'
     compile 'com.google.android.gms:play-services-location:9.8.0'
     compile 'com.google.android.gms:play-services-plus:9.8.0'
+    compile 'com.google.android.gms:play-services:9.8.0'
     compile 'com.google.firebase:firebase-storage:9.8.0'
+    compile 'com.firebaseui:firebase-ui-auth:0.6.0'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:multidex:1.0.0'
-    compile 'id.zelory:compressor:1.0.4'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.3.+'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="Enter your full name"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvName"
+        android:layout_weight="0" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter name..."
+        android:id="@+id/edName"/>
+
+    <TextView
+        android:text="Select your branch"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:id="@+id/tvBranch"
+        android:layout_weight="0" />
+ <EditText
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:hint="Comp , E and TC , Civil , Mech "
+     android:id="@+id/edBranch"/>
+    <TextView
+        android:text="Select your current year."
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:id="@+id/tvYear"
+        android:layout_weight="0" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="FE , SE , TE , BE"
+        android:id="@+id/edYear"/>
+    <TextView
+        android:text="Enter your GR number"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+
+        android:id="@+id/tvGrnumber"
+        android:layout_weight="0" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=""
+        android:id="@+id/edGr"/>
+    <TextView
+        android:text="Enter your contact details (This information will not be displayed anywhere)"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvContact"
+        android:layout_weight="0" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="10 digit mobile number"
+        android:id="@+id/edContact"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:id="@+id/btnSave"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/whiteColor"
+        android:onClick="done"
+        android:text="Submit Information"/>
+
+</LinearLayout>
