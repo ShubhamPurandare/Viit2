@@ -3,8 +3,6 @@ package college.root.viit2;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -26,52 +23,70 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
-
-//import id.zelory.compressor.Compressor;
 
 public class PostActivity extends AppCompatActivity {
 
-    private EditText mAddDesc, mAddTitle;
-    private Uri mImageUri = null;
+    private EditText mDepartment;
+    private EditText mEventName;
+    private EditText mEligibility;
+    private EditText mFees;
+    private EditText mRounds;
+    private EditText mRules;
+    private EditText mTeamSize;
+    private EditText mTimeLimit;
+    private EditText mVenue;
+    private EditText mTimings;
+    private EditText mExtraDetails;
+    private EditText mPrizes;
     private Button mSubmitButton;
+
+    private String allDetails ; // used to check if all details have been filled or not
+
+    private Uri mImageUri = null;
+
     private static final int GALLERY_REQUEST = 1;
     private StorageReference mStorage;
     private ProgressDialog mProgress;
     private DatabaseReference mDatabase;
-    private boolean checkBoxIsChecked = false;
-    int currentPidGandharva =0;
-    int currentPidPerception =0;
+    private int checkBoxIsChecked = 0;
+    int currentPid =0;
     private String TAG = "Test";
     ImageButton mpostImage;
-    RadioButton rbPerception , rbGandharva;
-    int currentPidToPost = 0;
-    Uri resultUri = null;
+    Button btnEvents;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        checkBoxIsChecked = false;
 
         Intent intent = getIntent();
-        currentPidGandharva = intent.getIntExtra("CurrentPidGandharva" , 0);
-        Log.d(TAG , "Curent recieved Gandharva pid is "+currentPidGandharva);
-        currentPidPerception = intent.getIntExtra("CurrentPidPerception" , 0);
-        Log.d(TAG , "Curent recieved Perception  pid is "+currentPidPerception);
+        currentPid = intent.getIntExtra("CurrentPid" , 0);
+        Log.d(TAG , "Curent recieved recent pid is "+currentPid);
 
-        mAddTitle = (EditText) findViewById(R.id.editText_title);
-        mAddDesc = (EditText) findViewById(R.id.editText_desc);
+        // all binding is below
+
+        mDepartment = (EditText) findViewById(R.id.editText_Department);
+        mEventName = (EditText) findViewById(R.id.editText_EventName);
+        mEligibility = (EditText) findViewById(R.id.editText_Eligibility);
+        mFees = (EditText) findViewById(R.id.editText_Fees);
+        mRounds = (EditText) findViewById(R.id.editText_Rounds);
+        mRules = (EditText) findViewById(R.id.editText_Rules);
+        mTeamSize= (EditText) findViewById(R.id.editText_TeamSize);
+        mTimeLimit = (EditText) findViewById(R.id.editText_TimeLimit);
+        mVenue = (EditText) findViewById(R.id.editText_Venue);
+        mTimings = (EditText) findViewById(R.id.editText_Timings);
+        mPrizes = (EditText) findViewById(R.id.editText_Prizes);
+        mExtraDetails = (EditText) findViewById(R.id.editText_ExtraDetails);
+
         mSubmitButton = (Button) findViewById(R.id.submit_button);
         mpostImage = (ImageButton)findViewById(R.id.imagePost);
+
+
+        //References are created
+
         mStorage = FirebaseStorage.getInstance().getReference();
         mProgress = new ProgressDialog(this);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ALLEvents");
@@ -109,63 +124,13 @@ public class PostActivity extends AppCompatActivity {
         if (requestCode==GALLERY_REQUEST && resultCode==RESULT_OK)
         {
             mImageUri=data.getData();
-            CropImage.activity(mImageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(this);
 
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == RESULT_OK) {
-                    resultUri = result.getUri();
-                    mpostImage.setImageURI(resultUri);
-                    Log.d(TAG , "Result uri success");
-
-
-
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Exception error = result.getError();
-
-                    Log.d(TAG , "Result uri error");
-                }
-            }
-
-
-            Picasso.with(getApplicationContext()).load(mImageUri).resize(500,400).centerCrop().into(new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    try {
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
-                        mpostImage.setImageBitmap(bitmap);
-                    }catch (Exception e){
-                        Log.d(TAG, "onBitmapLoaded: Exception caught in compressing image "+e.getMessage());
-                    }
-
-
-
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            });
-
-
-
-            }
+            mpostImage.setImageURI(mImageUri);
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
 
     }
-
-
-
 
     public static String random() {
         Random generator = new Random();
@@ -198,7 +163,7 @@ public class PostActivity extends AppCompatActivity {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Are you sure you want to Post ");
-       // builder.create();
+        // builder.create();
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -210,12 +175,27 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                final String title_val = mAddTitle.getText().toString().trim();
-                final String desc_val = mAddDesc.getText().toString().trim();
+                // String is set to null is class variables. Data of all fields is concatenated and stored in string below. if value is NOT null
+                // post will be made
+
+                allDetails = mDepartment.getText().toString()
+                        + mEventName.getText().toString()
+                        + mEligibility.getText().toString()
+                        + mFees.getText().toString()
+                        + mRounds.getText().toString()
+                        + mRules.getText().toString()
+                        + mTeamSize.getText().toString()
+                        + mTimeLimit.getText().toString()
+                        + mVenue.getText().toString()
+                        + mTimings.getText().toString()
+                        + mExtraDetails.getText().toString()
+                        + mPrizes.getText().toString();
 
                 Log.d(TAG, " In startAdding ");
-                final SimpleDateFormat date = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss ");
-                if (!TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(desc_val)  && checkBoxIsChecked) {
+
+                Log.i(TAG, allDetails);
+
+                if ( !TextUtils.isEmpty(allDetails) && mImageUri !=null ) {
                     mProgress.setMessage("Adding Event...");
                     mProgress.show();
                     mProgress.setCanceledOnTouchOutside(false);
@@ -232,15 +212,28 @@ public class PostActivity extends AppCompatActivity {
 
                             Log.d(TAG ," In setting title n other fields " );
                             mPost.child("Image").setValue(downloadUrl.toString());
-                            mPost.child("Title").setValue(title_val);
-                            mPost.child("Desc").setValue(desc_val);
-                            mPost.child("Time").setValue(date.format(new Date()));
+
+                            // all details are stored as child nodes of the post
+
+                            mPost.child("Department").setValue(mDepartment);
+                            mPost.child("Event Name").setValue(mEventName);
+                            mPost.child("Eligibility").setValue(mEligibility);
+                            mPost.child("Fees").setValue(mFees);
+                            mPost.child("Rounds").setValue(mRounds);
+                            mPost.child("Rules").setValue(mRules);
+                            mPost.child("Team Size").setValue(mTeamSize);
+                            mPost.child("Time Limit").setValue(mTimeLimit);
+                            mPost.child("Venue").setValue(mVenue);
+                            mPost.child("Timings").setValue(mTimings);
+                            mPost.child("Extra Details").setValue(mExtraDetails);
+                            mPost.child("Prizes").setValue(mPrizes);
+
+
                             //    mPost.child("Image").setValue(downloadUrl.toString());
-                            mPost.child("Post_id").setValue((currentPidToPost+1));
-                            Log.d(TAG , "Pid posted now is "+currentPidToPost);
+                            mPost.child("Post_id").setValue(currentPid +1);
+                            Log.d(TAG , "Pid posted now is "+currentPid+1);
                             mProgress.dismiss();
                             //onCreateNotification();
-                            Toast.makeText(PostActivity.this , "Post Uploaded successfully ", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(PostActivity.this, EventsActivity.class));
 
                             mProgress.dismiss();
@@ -274,30 +267,22 @@ public class PostActivity extends AppCompatActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
-
-        rbGandharva = (RadioButton) findViewById(R.id.radio_cultural);
-        rbPerception = (RadioButton) findViewById(R.id.radio_technical);
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.radio_technical:
                 if (checked)
                     mDatabase= FirebaseDatabase.getInstance().getReference().child("GANDHARVA");
-                currentPidToPost = currentPidGandharva;
-                Log.d(TAG, "onRadioButtonClicked: current post id id of Gandharva");
-                checkBoxIsChecked= true;
+                checkBoxIsChecked= 1;
                 break;
             case R.id.radio_cultural:
                 if (checked)
                     mDatabase= FirebaseDatabase.getInstance().getReference().child("PERCEPTION");
-                checkBoxIsChecked= true;
-                currentPidToPost = currentPidPerception;
-                Log.d(TAG, "onRadioButtonClicked: current post id id of Perception");
+                checkBoxIsChecked= 1;
                 break;
 
 
         }
     }
-
 
 
 }
