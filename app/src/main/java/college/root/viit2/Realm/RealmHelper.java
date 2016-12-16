@@ -22,10 +22,10 @@ public class RealmHelper {
     Boolean saved = null;
     Boolean saved1 = null;
     Boolean saved2 = null;
-    RealmResults<PerceptionData> Presults = null;
-    RealmQuery<PerceptionData> query = null;
     RealmQuery<Data> queryData = null;
     String TAG = "test";
+    RealmResults<UserInfo> results2;
+    UserInfo info;
 
     public RealmHelper(Realm realm) {
         this.realm = realm;
@@ -60,6 +60,7 @@ public class RealmHelper {
                         saved = true;
 
 
+
                     } catch (RealmException r) {
                         saved = false;
                     }
@@ -70,17 +71,6 @@ public class RealmHelper {
         }
 
         return saved;
-    }
-
-    public int getLatestPid() {
-
-        int pid = 0;
-        results = realm.where(Data.class).findAll();
-        results.sort("postid", Sort.DESCENDING);
-
-        //  pid = results.first();
-
-        return pid;
     }
 
 
@@ -132,71 +122,10 @@ public class RealmHelper {
     // Code below is for PerceptionData
 
 
-    public boolean saveP(final PerceptionData pdata) {
-
-        if (pdata == null) {
-            saved = false;
-        } else{
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
 
 
-                    try {
-
-                        PerceptionData d = realm.copyToRealm(pdata);
-                        saved1 = true;
 
 
-                    } catch (RealmException r) {
-                        saved1 = false;
-                    }
-                }
-            });
-        }
-
-        return saved1;
-    }
-
-
-    public void retrivePerception() {
-
-        Presults = realm.where(PerceptionData.class).findAll();
-        Presults.sort("postid", Sort.DESCENDING);
-
-    }
-
-
-    public ArrayList<PerceptionData> refreshPerception() {
-
-        ArrayList<PerceptionData> list = new ArrayList<>();
-        // results.sort();
-        for (PerceptionData pdata : Presults) {
-            list.add(pdata);
-
-        }
-        return list;
-
-    }
-
-    public boolean checkPidExists( int pid) {
-
-        query =null;
-        query = realm.where(PerceptionData.class);
-        query.equalTo("postid" , pid);
-        for (int i = 0 ; i< Presults.size() ; i++ ){
-            Log.d("Test", "check: "+ Presults.get(i));
-        }
-        Presults = realm.where(PerceptionData.class).equalTo("postid" , pid).findAll();
-
-
-        //  pid = results.first();
-        if (query!=null){
-            return true;
-        }else {
-            return  false;
-        }
-    }
 
 
     public boolean saveUserInfo(final  UserInfo userInfo){
@@ -225,9 +154,28 @@ public class RealmHelper {
 
         }
 
-        return saved;
+        return saved2;
 
     }
+
+    public UserInfo getUserInfo(){
+         info = new UserInfo();
+        results2 = null;
+        info = realm.where(UserInfo.class).findFirst();
+        return  info;
+    }
+
+    public void updateData(final Data data){
+        realm.beginTransaction();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(data);
+                realm.commitTransaction();
+            }
+        });
+    }
+
 
 
 }

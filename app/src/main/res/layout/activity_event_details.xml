@@ -11,26 +11,50 @@
     tools:context="college.root.viit2.EventDetailsActivity">
 
     <TextView
-        android:text="TITLE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textViewTitle"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
-
-    <TextView
         android:text="desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewTitle"
-        android:layout_alignLeft="@+id/textViewTitle"
-        android:layout_alignStart="@+id/textViewTitle"
         android:layout_marginTop="80dp"
         android:textSize="20dp"
         android:textStyle="italic"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3"
+        android:layout_alignLeft="@+id/textViewTitle"
+        android:layout_alignStart="@+id/textViewTitle" />
+
+    <TextView
+        android:text="TITLE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTitle"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
+
+    <Button
+        android:text="Register Now !"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/colorPrimary"
+      android:textColor="@color/whiteColor"
+        android:id="@+id/btnRegister"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <Button
+        android:text="Check Competition for this event !"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:id="@+id/btnComp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/whiteColor"/>
 
 
 </RelativeLayout>

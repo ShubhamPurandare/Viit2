@@ -2,21 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/greyColor"
     android:orientation="vertical">
 
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="Setting up Your Profile..."
+    android:textStyle="bold"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="50dp"
+    android:textSize="20dp"/>
     <TextView
-        android:text="Enter your full name"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:id="@+id/tvName"
-        android:layout_weight="0" />
-    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#A9A9A9"/>
+
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter name..."
-        android:id="@+id/edName"/>
+        android:text="Click on the button below we will verify your phone number. We Wont display your phone number on the app "
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <com.digits.sdk.android.DigitsAuthButton
+        android:id="@+id/authButton"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter your phone number"
+        android:layout_marginLeft="70dp"
+        android:backgroundTint="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:text="You wont be able to change youe branch and year , so please enter the correct details."/>
 
     <TextView
         android:text="Select your branch"
@@ -24,58 +49,99 @@
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
+        android:layout_marginLeft="10dp"
         android:id="@+id/tvBranch"
         android:layout_weight="0" />
- <EditText
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:hint="Comp , E and TC , Civil , Mech "
-     android:id="@+id/edBranch"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Computer"
+            android:id="@+id/rbComputer"
+            android:onClick="onDeptClicked"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E And TC"
+            android:onClick="onDeptClicked"
+            android:id="@+id/rbENTC"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Civil"
+            android:onClick="onDeptClicked"
+            android:id="@+id/rbCivil"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mechnical"
+            android:onClick="onDeptClicked"
+            android:id="@+id/rbMech"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#A9A9A9"/>
+
+
     <TextView
         android:text="Select your current year."
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
+        android:layout_marginLeft="5dp"
         android:id="@+id/tvYear"
         android:layout_weight="0" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="FE , SE , TE , BE"
-        android:id="@+id/edYear"/>
-    <TextView
-        android:text="Enter your GR number"
+    <RadioGroup
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FE"
+            android:id="@+id/rbFe"
+            android:onClick="onYearClicked"/>
 
-        android:id="@+id/tvGrnumber"
-        android:layout_weight="0" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint=""
-        android:id="@+id/edGr"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SE"
+            android:onClick="onYearClicked"
+            android:id="@+id/rbSE"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TE"
+            android:onClick="onYearClicked"
+            android:id="@+id/rbTE"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BE"
+            android:onClick="onYearClicked"
+            android:id="@+id/rbBE"/>
+
+    </RadioGroup>
     <TextView
-        android:text="Enter your contact details (This information will not be displayed anywhere)"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:id="@+id/tvContact"
-        android:layout_weight="0" />
-    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#A9A9A9"/>
+
+ <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="10 digit mobile number"
-        android:id="@+id/edContact"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:id="@+id/btnSave"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button"
         android:textColor="@color/whiteColor"
         android:onClick="done"
         android:text="Submit Information"/>

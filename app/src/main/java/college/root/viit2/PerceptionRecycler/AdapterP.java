@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import college.root.viit2.EventDetailsActivity;
-import college.root.viit2.GandharvaRecycler.MyHolder;
 import college.root.viit2.R;
-import college.root.viit2.Realm.Data;
 import college.root.viit2.Realm.PerceptionData;
 
 /**

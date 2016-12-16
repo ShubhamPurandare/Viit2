@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardBackgroundColor="@color/greyColor"
+    android:elevation="100dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal"
+        android:id="@+id/Profile"
+        android:layout_gravity="fill"/>
+
+    <TextView
+        android:text="Display name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDisplayName"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:text="Branch:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv11"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:text="Computer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvbranchname"
+        android:layout_marginLeft="76dp"
+        android:layout_marginTop="61dp"/>
+
+    <TextView
+        android:text="Year : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView16"
+        android:layout_marginLeft="170dp"
+        android:textStyle="bold"
+
+        android:layout_marginTop="61dp"/>
+
+    <TextView
+        android:text="TE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yeartv"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="61dp"/>
+
+    <TextView
+        android:text="Contact details : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:text="78488454638"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cnt"
+        android:layout_marginLeft="123dp"
+        android:layout_marginTop="90dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email : "
+        android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="110dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvEmail"
+        android:text="email"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="74dp"/>
+
+
+</android.support.v7.widget.CardView>

@@ -4,84 +4,285 @@
     android:id="@+id/activity_post"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/whiteColor"
     tools:context="college.root.viit2.PostActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="16dp"
         android:id="@+id/ScrollView">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
             tools:context=".MainActivity">
-            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <RadioButton
-                    android:id="@+id/radio_technical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="GANDHARVA"
-                android:onClick="onRadioButtonClicked"
-                android:paddingLeft="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="POST YOUR EVENT...."
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="Select the department of event .."
+                android:textStyle="bold" />
 
-            <RadioButton android:id="@+id/radio_cultural"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PERCEPTION"
-                android:onClick="onRadioButtonClicked"
-                android:paddingLeft="10dp"/>
-            </RadioGroup>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:orientation="horizontal">
+
+
+                <RadioGroup
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/radioCompter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Computer"
+                        android:onClick="DeptRadioButtonClicked"
+                        android:paddingLeft="0dp"/>
+
+                    <RadioButton android:id="@+id/radioEntc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="E And TC"
+                        android:onClick="DeptRadioButtonClicked"
+                        android:paddingLeft="0dp"/>
+                    <RadioButton android:id="@+id/radioMech"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mechanical"
+                        android:onClick="DeptRadioButtonClicked"
+                        android:paddingLeft="0dp"/><RadioButton
+                    android:id="@+id/radioCivil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Civil"
+                    android:onClick="DeptRadioButtonClicked"
+                    android:paddingLeft="0dp"/>
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textStyle="bold"
+                android:text="** Fill all the details .. make your event desciptive . Uploading an image is optional"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A9A9A9"/>
             <ImageButton
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/imageview"
                 android:id="@+id/imagePost"
                 android:layout_gravity="fill"
-                android:layout_margin="10dp"/>
+                android:layout_margin="15dp"
+                android:background="@color/whiteColor" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText_title"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:hint="Enter Title"
+                android:layout_marginTop="25dp"
+               android:elevation="5dp"
+                android:hint="Enter Title*"
+                android:layout_margin="0dp"
+                android:backgroundTint="@color/greyColor"
+                android:background="@drawable/corners"
                 android:padding="10dp"
                 />
 
             <EditText
                 android:layout_width="match_parent"
+                android:elevation="5dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/lightGrey"
                 android:inputType="textMultiLine"
+                android:background="@drawable/corners"
                 android:ems="10"
                 android:id="@+id/editText_desc"
-                android:hint="Enter Description"
+                android:hint="Enter Description*"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:elevation="5dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/lightGrey"
+                android:inputType="textMultiLine"
+                android:background="@drawable/corners"
+                android:ems="10"
+                android:id="@+id/edDate"
+                android:hint="Enter date of event*"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/editText_Fees"
+                android:layout_width="match_parent"
+                android:elevation="5dp"
+                android:backgroundTint="@color/lightGrey"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:background="@drawable/corners"
+                android:ems="10"
+                android:hint="Enter Fees"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:padding="10dp"/>
 
+            <EditText
+                android:id="@+id/editText_Rounds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:background="@drawable/corners"
+                android:backgroundTint="@color/lightGrey"
+                android:ems="10"
+                android:elevation="5dp"
+                android:hint="Enter Rounds"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/editText_Rules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corners"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:backgroundTint="@color/lightGrey"
+                android:elevation="5dp"
+                android:hint="Enter Rules"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/editText_TeamSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:background="@drawable/corners"
+                android:ems="10"
+                android:backgroundTint="@color/lightGrey"
+                android:hint="Enter Team Size"
+                android:elevation="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/editText_TimeLimit"
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/lightGrey"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corners"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:hint="Enter Time Limit Per Round"
+                android:layout_gravity="center_horizontal"
+                android:elevation="5dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/editText_Venue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corners"
+                android:backgroundTint="@color/lightGrey"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:hint="Enter Venue"
+                android:layout_gravity="center_horizontal"
+                android:elevation="5dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/editText_Timings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:backgroundTint="@color/lightGrey"
+                android:background="@drawable/corners"
+                android:hint="Enter Timings"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:elevation="5dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/editText_Prizes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/lightGrey"
+                android:inputType="textMultiLine"
+                android:background="@drawable/corners"
+                android:ems="10"
+                android:hint="Enter Prizes"
+                android:elevation="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/edContactDetails"
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/lightGrey"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corners"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:hint="Enter the coordinator name and phone number.."
+                android:elevation="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/editText_ExtraDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corners"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:backgroundTint="@color/lightGrey"
+                android:elevation="5dp"
+                android:hint="Enter Extra Details"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SUBMIT "
+                android:layout_marginTop="10dp"
                 android:id="@+id/submit_button"
+                android:textColor="@color/whiteColor"
                 android:layout_alignParentBottom="true"
-                android:background="#E53935"        />
+                android:elevation="5dp"
+                style="@style/MyButton"
+                android:background="@drawable/button"        />
 
 
 

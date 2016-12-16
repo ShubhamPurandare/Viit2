@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 24
@@ -8,7 +9,7 @@ android {
         multiDexEnabled true
         applicationId "college.root.viit2"
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -18,7 +19,26 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+
     }
+
+    packagingOptions {
+
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+
+
+    }
+}
+
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
@@ -27,31 +47,32 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:multidex:1.0.1'
+
+    compile('com.digits.sdk.android:digits:2.0.3@aar') {
+        transitive = true;
+    }
+
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.google.firebase:firebase-crash:9.8.0'
-    compile 'com.google.firebase:firebase-core:9.8.0'
+    compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.firebaseui:firebase-ui-database:0.4.0'
-    compile 'com.google.firebase:firebase-auth:9.8.0'
+    compile 'com.google.firebase:firebase-auth:10.0.1'
+    compile 'com.firebase:firebase-client-android:2.5.2'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
-    compile 'com.google.firebase:firebase-messaging:9.8.0'
-    compile 'com.google.firebase:firebase-database:9.8.0'
-    compile 'com.google.android.gms:play-services-auth:9.8.0'
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
-    compile 'com.google.android.gms:play-services-ads:9.8.0'
-    compile 'com.google.android.gms:play-services-gcm:9.8.0'
-    compile 'com.google.android.gms:play-services-location:9.8.0'
-    compile 'com.google.android.gms:play-services-plus:9.8.0'
-    compile 'com.google.android.gms:play-services:9.8.0'
-    compile 'com.google.firebase:firebase-storage:9.8.0'
-    compile 'com.firebaseui:firebase-ui-auth:0.6.0'
+    compile 'com.google.firebase:firebase-database:10.0.1'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
+    compile 'com.google.android.gms:play-services-fitness:10.0.1'
+    compile 'com.google.android.gms:play-services-wearable:10.0.1'
+    compile 'com.google.firebase:firebase-storage:10.0.1'
+    compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:multidex:1.0.0'
-    compile 'com.theartofdev.edmodo:android-image-cropper:2.3.+'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1@aar'
+    compile 'me.relex:circleindicator:1.2.2@aar'
+    compile files('libs/CircleImageView-master/gradle/wrapper/gradle-wrapper.jar')
+
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

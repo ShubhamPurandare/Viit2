@@ -8,8 +8,31 @@ import io.realm.RealmObject;
 
 public class UserInfo extends RealmObject {
 
-    int uid ;
-    String name , year, branch , grnumber , contact;
+    String uid ;
+    String name;
+    String year;
+    String branch;
+    String grnumber;
+    String contact;
+    String email;
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    String photoUrl;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public UserInfo() {
     }
@@ -46,11 +69,11 @@ public class UserInfo extends RealmObject {
         this.name = name;
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

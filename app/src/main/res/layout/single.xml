@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="25dp"
-    android:elevation="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"  android:layout_margin="25dp"
+    card_view:cardBackgroundColor="@color/greyColor"
+    card_view:cardElevation="3dp"
+    app:cardCornerRadius="5dp">
 
-    android:background="@android:color/holo_blue_light">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -21,16 +24,47 @@
         android:orientation="vertical"
         android:elevation="20dp"
         android:background="@android:color/transparent">
-
-
-       <ImageView
-           android:layout_width="match_parent"
-           android:layout_height="200dp"
-           android:layout_margin="10dp"
-           android:id="@+id/imageLoad"
-           android:layout_gravity="fill"
-           android:src="@mipmap/ic_launcher"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/colorPrimary">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tvDept"
+                android:text="Computer Department"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:textStyle="bold"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/whiteColor"
+                android:layout_marginTop="3dp"/>
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/star"
+        android:background="@color/greyColor"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/star1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Registered"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="7dp"
+        android:id="@+id/tvIsRegistered"
+        android:textColor="#ffb300"/>
+</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#A9A9A9"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,54 +72,87 @@
             android:padding="10dp"
             android:textStyle="bold"
             android:textSize="16dp"
-            android:text="Event Title goes here"/>
+            android:text="Event Title goes here"
+            android:layout_marginLeft="40dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#A9A9A9"/>
+
+        <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="200dp"
+           android:layout_margin="10dp"
+           android:id="@+id/imageLoad"
+           android:layout_gravity="fill"
+           android:src="@mipmap/ic_launcher"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#A9A9A9"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvdesc"
             android:padding="10dp"
             android:text="Event Desc goes here"/>
-        <LinearLayout
-            android:id="@+id/LayoutLike"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <TextView
-                android:id="@+id/TvLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RSVP"
-                android:layout_gravity="center"
-                android:layout_marginLeft="80dp"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:paddingLeft="50dp"/>
+            android:layout_height="0.5dp"
+            android:background="#A9A9A9"/>
 
 
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:orientation="horizontal">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date of event :"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp"
+            android:textStyle="bold"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/tvTime"
                 android:text="Time"
-                android:gravity="center"/>
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="7dp"/>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/pid"/>
         </LinearLayout>
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:text="Contact details....."
+    android:id="@+id/tvContact"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="5dp"/>
         <LinearLayout
+            android:id="@+id/LayoutLike"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:orientation="vertical"
-            android:background="#2979ff">
+            android:layout_height="50dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/btnCompetition"
+                android:layout_marginTop="10dp"
+                android:text="Register and see competition"
+                android:background="@drawable/button"
+                android:textColor="@color/whiteColor"/>
+
 
         </LinearLayout>
+
 
     </LinearLayout>
 

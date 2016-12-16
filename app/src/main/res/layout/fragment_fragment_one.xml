@@ -1,13 +1,53 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="college.root.viit2.Fragments.FragmentOne">
+    android:background="@drawable/background"
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="0dp"
+    tools:context="college.root.viit2.Fragments.FragmentTwo">
+
+<!-- TODO: Update blank fragment layout -->
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerViewFragment1"/>
+        android:src="@color/blackColor"
+        android:alpha="0.5"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/im1"
+        app:civ_border_color="@color/whiteColor"
+        app:civ_border_width="10dp"
+
+        android:src="@drawable/perception" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:civ_border_color="@color/whiteColor"
+        app:civ_border_width="10dp"
+        android:src="@drawable/gandh"
+        android:id="@+id/imageView2" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:civ_border_color="@color/whiteColor"
+        app:civ_border_width="10dp"
+        android:src="@drawable/vilogo"
+        android:id="@+id/imageView3" />
+
+    <TextView
+        android:text="WELCOME"
+        android:textColor="@color/whiteColor"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="100dp"
+        android:id="@+id/textView" />
+
 
 </FrameLayout>

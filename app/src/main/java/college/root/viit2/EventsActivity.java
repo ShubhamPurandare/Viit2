@@ -1,20 +1,30 @@
 package college.root.viit2;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,11 +34,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import college.root.viit2.Fragments.FragmentOne;
 import college.root.viit2.Fragments.FragmentTwo;
 
 
-public class EventsActivity extends AppCompatActivity {
+public class EventsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DatabaseReference mDatabase;
     String TAG = "Test";
@@ -36,6 +45,9 @@ public class EventsActivity extends AppCompatActivity {
     public  int currentPidPerception =0 ;
     SharedPreferences sharedPreferences , sharedPreferences1;
     String pid = "";
+    FirebaseUser user;
+    DrawerLayout drawer;
+    FloatingActionButton fabAdd;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -46,6 +58,13 @@ public class EventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        LayoutInflater inflater = getLayoutInflater();
+        View view1 = inflater.inflate(R.layout.welcomepage , null);
+
+        DialogFragment dialogFragment = new DialogFragment(view1);
+        dialogFragment.show(getSupportFragmentManager() , " its working ");
 
         sharedPreferences = getSharedPreferences("userInfoGandharva" , Context.MODE_PRIVATE);
         sharedPreferences1 = getSharedPreferences("userInfoPerception" , Context.MODE_PRIVATE);
@@ -53,20 +72,77 @@ public class EventsActivity extends AppCompatActivity {
 
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        fabAdd = (FloatingActionButton)findViewById(R.id.fabAdd);
+
+        if (user.getEmail().equals("shubham.purandare@gmail.com") || user.getEmail().equals("mrunalj.369@gmail.com"))
+        {
+            fabAdd.setVisibility(View.VISIBLE);
+        }else {
+            fabAdd.setVisibility(View.GONE);
+        }
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.app_name, R.string.app_name);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(EventsActivity.this);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setupWithViewPager(mViewPager);
+        setupViewPager(mViewPager);
+        tabLayout.setupWithViewPager(mViewPager);
+
+
+
+      fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user !=null) {
+
+                    if (user.getEmail().equals("shubham.purandare@gmail.com") || user.getEmail().equals("mrunalj.369@gmail.com")) {
+                        pid = sharedPreferences.getString("CurrentPidGandharva", "0");
+                        currentPidGandharva = Integer.parseInt(pid);
+                        pid = sharedPreferences1.getString("CurrentPidPerception", "0");
+                        currentPidPerception = Integer.parseInt(pid);
+                        Log.d(TAG, "onOptionsItemSelected:  Pid recieved of gandharva from shared pref is " + currentPidGandharva);
+                        Log.d(TAG, "onOptionsItemSelected: Pid recieved of perception from shared pref is" + currentPidPerception);
+
+
+                        Intent intent = new Intent(EventsActivity.this, PostActivity.class);
+                        intent.putExtra("CurrentPidGandharva", currentPidGandharva);
+                        intent.putExtra("CurrentPidPerception", currentPidPerception);
+                        startActivity(intent);
+                       } else {
+                        Toast.makeText(getApplicationContext(), "Permission denied ..", Toast.LENGTH_SHORT).show();
+
+                    }
+                }else{
+                    Log.d(TAG, "onOptionsItemSelected: user returned a null value");
+                }
+
+
+
+
+
+            }
+        });
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -97,11 +173,8 @@ public class EventsActivity extends AppCompatActivity {
             }
         });
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        setupViewPager(mViewPager);
-        tabLayout.setupWithViewPager(mViewPager);
+
+      //  tabLayout.setupWithViewPager(mViewPager);
 
 
 
@@ -111,8 +184,8 @@ public class EventsActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new FragmentTwo() , "Perception");
         adapter.addFragment(new FragmentTwo() , "Gandharva");
-        adapter.addFragment(new FragmentOne() , "Perception");
         viewPager.setAdapter(adapter);
     }
 
@@ -132,24 +205,62 @@ public class EventsActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.add) {
-            pid = sharedPreferences.getString("CurrentPidGandharva" ,"0");
-            currentPidGandharva = Integer.parseInt(pid);
-            pid = sharedPreferences1.getString("CurrentPidPerception" ,"0");
-            currentPidPerception = Integer.parseInt(pid);
-            Log.d(TAG, "onOptionsItemSelected:  Pid recieved of gandharva from shared pref is "+currentPidGandharva);
-            Log.d(TAG, "onOptionsItemSelected: Pid recieved of perception from shared pref is"+currentPidPerception);
+        if (id == R.id.Logout) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(EventsActivity.this);
+            builder.setTitle("Are you sure you want to logout ?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    firebaseAuth.signOut();
+                    Log.d(TAG, "onOptionsItemSelected: signed out");
+                    finish();
+                    startActivity(new Intent(EventsActivity.this , SignInActivity.class));
 
 
-            Intent intent = new Intent(EventsActivity.this, PostActivity.class);
-            intent.putExtra("CurrentPidGandharva" , currentPidGandharva);
-            intent.putExtra("CurrentPidPerception" , currentPidPerception);
-            startActivity(intent);
-            return true;
+
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    dialogInterface.dismiss();
+
+                }
+            });
+            builder.show();
+
+
+
+
+
         }
 
+
+
+
+            //noinspection SimplifiableIfStatement
+
+    
+
+
+
+
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.profile) {
+
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     /**
@@ -209,9 +320,9 @@ public class EventsActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Gandharva";
-                case 1:
                     return "Perception";
+                case 1:
+                    return "Gandharva";
 
             }
             return null;
@@ -246,67 +357,5 @@ public class EventsActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

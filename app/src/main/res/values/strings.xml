@@ -20,4 +20,5 @@
         <item>TE</item>
         <item>BE</item>
     </string-array>
+    <string name="title_activity_trial">Trial</string>
 </resources>

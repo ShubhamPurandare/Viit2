@@ -1,0 +1,30 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/split2"
+
+    tools:context="college.root.viit2.Fragments.FragmentTwo">
+
+<!-- TODO: Update blank fragment layout -->
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@color/blackColor"
+    android:alpha="0.5"/>
+
+    <Button
+        android:text="GET STARTED"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/button"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/whiteColor"/>
+
+</FrameLayout>

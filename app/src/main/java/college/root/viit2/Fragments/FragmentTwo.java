@@ -3,6 +3,7 @@ package college.root.viit2.Fragments;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,11 +40,14 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import college.root.viit2.EventsActivity;
-import college.root.viit2.GandharvaRecycler.CustomAdapter;
+import college.root.viit2.Adapters.CustomAdapter;
+import college.root.viit2.IntentServices.FirebaseServiceOffline;
+import college.root.viit2.IntentServices.FirebaseServiceOnline;
 import college.root.viit2.MainActivity;
 import college.root.viit2.R;
 import college.root.viit2.Realm.Data;
 import college.root.viit2.Realm.RealmHelper;
+import college.root.viit2.UsersActivity;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
@@ -65,6 +69,7 @@ public class FragmentTwo extends Fragment {
     StorageReference mstorageReference;
     String imageNameRealm;
     String imageName = null;
+    ProgressDialog mprogress;
 
 
     public FragmentTwo() {
@@ -85,7 +90,8 @@ public class FragmentTwo extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        getActivity().startService(new Intent(getContext() , FirebaseServiceOnline.class));
+        Log.d(TAG, "onViewCreated: user is online");
         sharedPreferences1 = getActivity().getSharedPreferences("userInfoGandharva" , Context.MODE_PRIVATE);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("GANDHARVA");
         mstorageReference = FirebaseStorage.getInstance().getReference();
@@ -111,6 +117,7 @@ public class FragmentTwo extends Fragment {
         helper.retrive();
         Log.d(TAG , "Helper set");
         customAdapter = new CustomAdapter(helper.refresh() , getContext());
+        customAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(customAdapter);
         Log.d(TAG , "Adapter set");
         realmChangeListener = new RealmChangeListener() {
@@ -126,9 +133,18 @@ public class FragmentTwo extends Fragment {
         realm.addChangeListener(realmChangeListener);
 
         mDatabase.keepSynced(true);
+        mprogress = new ProgressDialog(getContext());
+        mprogress.setTitle("Loading posts....");
+        mprogress.show();
         mDatabase.addChildEventListener(childEventListener);
+        mprogress.dismiss();
+
+      /*  mDatabase.removeEventListener(childEventListener);
 
 
+        Intent intent = new Intent(getContext() , FirebaseServiceOffline.class);
+        getActivity().startService(intent);
+        Log.d(TAG, "onViewCreated: Firebase connection disconnected...");*/
 
     }// end of onCreate
 
@@ -136,21 +152,32 @@ public class FragmentTwo extends Fragment {
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Log.d(TAG , "in childevent listener");
+            Log.d(TAG , "in child event listener");
             long count = dataSnapshot.getChildrenCount();
-            Log.d(TAG , "Childresn count is :" +count);
+            Log.d(TAG , "Children count is :" +count);
 
             Iterator i = dataSnapshot.getChildren().iterator();
 
-            //while (i.hasNext()){
                 try {
+                   
                     String pid = dataSnapshot.child("Post_id").getValue().toString();
                     Log.d(TAG, "Pid is " + pid);
+                    
                     String title = dataSnapshot.child("Title").getValue().toString();
                     String desc = dataSnapshot.child("Desc").getValue().toString();
                     String imageUrl = dataSnapshot.child("Image").getValue().toString();
-                    String date = dataSnapshot.child("Time").getValue().toString();
-                  //  Log.d(TAG, "onChildAdded: image url is "+imageUrl);
+                    String date = dataSnapshot.child("Date").getValue().toString();
+                    String deptName = dataSnapshot.child("Dept").getValue().toString();
+                    String rounds = dataSnapshot.child("Rounds").getValue().toString();
+                    String rules = dataSnapshot.child("Rules").getValue().toString();
+                    String prize = dataSnapshot.child("Prizes").getValue().toString();
+                    String fees = dataSnapshot.child("Fees").getValue().toString();
+                    String venue = dataSnapshot.child("Venue").getValue().toString();
+                    String timing = dataSnapshot.child("Time").getValue().toString();
+                    String extra = dataSnapshot.child("Extra").getValue().toString();
+                    String timePerRound = dataSnapshot.child("TimePerRound").getValue().toString();
+                    String teamSize = dataSnapshot.child("TeamSize").getValue().toString();
+                    String contactDetails = dataSnapshot.child("ContactDetails").getValue().toString();
 
 
                     RealmHelper helper = new RealmHelper(realm);
@@ -171,10 +198,28 @@ public class FragmentTwo extends Fragment {
                         data.setDesc(desc);
                         data.setTitle(title);
                         data.setDate(date);
-                        imageNameRealm  = downloadImage(imageUrl);
+                        data.setDeptName(deptName);
+                        data.setRegistered(false);
+                        data.setExtra(extra);
+                        data.setTimePerRound(timePerRound);
+                        data.setTime(timing);
+                        data.setFees(fees);
+                        data.setRounds(rounds);
+                        data.setRules(rules);
+                        data.setPrizes(prize);
+                        data.setVenue(venue);
+                        data.setTeamSize(teamSize);
+                        data.setContactDetails(contactDetails);
+                        if (imageUrl.equals("No Image")){
+                            imageNameRealm  = downloadImage(imageUrl);
 
-                        data.setImageName(imageNameRealm);
-                        Log.d(TAG, "onChildAdded: image name is "+imageNameRealm);
+                            data.setImageName(imageNameRealm);
+                            Log.d(TAG, "onChildAdded: image name is "+imageNameRealm);
+
+                        }else{
+                            data.setImageName(null);
+
+                        }
 
 
                         if (helper.save(data)){
@@ -192,10 +237,8 @@ public class FragmentTwo extends Fragment {
                     Log.d(TAG , "Exception caught is "+e.getMessage());
                 }
 
-                i.next();
-            }// end of while
-
-        //}
+            Log.d(TAG, "onChildAdded: in loop ");
+        }
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -216,21 +259,24 @@ public class FragmentTwo extends Fragment {
         public void onCancelled(DatabaseError databaseError) {
 
         }
+
+        
     };
 
 
 
+
     private void onCreateNotification() {
-        Intent intent = new Intent(getContext(), EventsActivity.class);
+        Intent intent = new Intent(getContext(), UsersActivity.class);
         TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(getContext());
         taskStackBuilder.addParentStack(MainActivity.class);
         taskStackBuilder.addNextIntent(intent);
         PendingIntent pendingIntent=taskStackBuilder.getPendingIntent(123, PendingIntent.FLAG_UPDATE_CURRENT);
-        String abc =  "Check out the new Event added in Gandharva";
+        String titleMessage =  "You are successfully registered for the event!";
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext());
-        mBuilder.setContentTitle("New entry Added!");
-        mBuilder.setContentText(abc);
+        mBuilder.setContentTitle("Check out the competition sector now ..");
+        mBuilder.setContentText(titleMessage);
         mBuilder.setAutoCancel(true);
         mBuilder.setSmallIcon(R.drawable.notify);
         mBuilder.setContentIntent(pendingIntent);
@@ -259,7 +305,7 @@ public class FragmentTwo extends Fragment {
                         File sdCardDirectory = Environment.getExternalStorageDirectory();
 
                         imageName =System.currentTimeMillis()+".png";
-                        File image = new File(sdCardDirectory, imageName);
+                        File image = new File(sdCardDirectory , imageName);
 
 
                         Log.d(TAG , "image file created" +image);
