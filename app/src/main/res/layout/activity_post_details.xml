@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="college.root.viit2.PostDetailsActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:verticalScrollbarPosition="right"
+    android:nestedScrollingEnabled="true"
+    >
+
+    <LinearLayout
+
+        android:id="@+id/activity_post_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Department"/>
+
+        <TextView
+            android:id="@+id/tv_department"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Department"
+            android:lines="1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event Name"/>
+
+        <TextView
+            android:id="@+id/tv_EventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event Name"
+            android:lines="1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eligibility"/>
+
+        <TextView
+            android:id="@+id/tv_Eligibility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eligibility"
+            android:lines="1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fees"/>
+
+        <TextView
+            android:id="@+id/tv_Fees"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fees"
+            android:lines="1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team Size"/>
+
+        <TextView
+            android:id="@+id/tv_TeamSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Team Size"
+            android:lines="1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rounds"/>
+
+        <TextView
+            android:id="@+id/tv_Rounds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rounds"
+            android:maxLines="50"
+            android:lines="5"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time Limit"/>
+
+        <TextView
+            android:id="@+id/tv_TimeLimit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TimeLimit"
+            android:maxLines="50"
+            android:lines="5"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rules"/>
+
+        <TextView
+            android:id="@+id/tv_Rules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rules"
+            android:maxLines="50"
+            android:lines="5"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Venue"/>
+
+        <TextView
+            android:id="@+id/tv_Venue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Venue"
+            android:maxLines="50"
+            android:lines="2"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timings"/>
+
+        <TextView
+            android:id="@+id/tv_Timings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Timings"
+            android:maxLines="50"
+            android:lines="5"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Extra Details"/>
+
+        <TextView
+            android:id="@+id/tv_ExtraDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Extra Details"
+            android:maxLines="50"
+            android:lines="5"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prizes"/>
+
+        <TextView
+            android:id="@+id/tv_Prizes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prizes"
+            android:maxLines="50"
+            android:lines="5"
+            />
+
+    </LinearLayout>
+
+</ScrollView>
