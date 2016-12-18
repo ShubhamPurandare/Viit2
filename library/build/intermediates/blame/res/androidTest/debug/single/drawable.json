@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/root/SwipeDots/E:\\android\\AndroidStudioProjects\\SwipeDots\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "/root/SwipeDots/E:\\android\\AndroidStudioProjects\\SwipeDots\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\vpi__tab_indicator.xml"
+    },
+    {
+        "merged": "/root/SwipeDots/library/build/intermediates/res/merged/androidTest/debug/drawable/vpi__tab_indicator.xml",
+        "source": "/root/SwipeDots/library/build/intermediates/bundles/debug/res/drawable/vpi__tab_indicator.xml"
+    }
+]
