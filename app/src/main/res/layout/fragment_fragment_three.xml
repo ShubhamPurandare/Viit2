@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/split2"
 
-    tools:context="college.root.viit2.Fragments.FragmentTwo">
+    tools:context="college.root.viit2.FragmentThree">
 
 <!-- TODO: Update blank fragment layout -->
 <ImageView
@@ -18,10 +18,10 @@
         android:text="GET STARTED"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="460dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:id="@+id/button"
+       android:id="@+id/buttonstart"
         android:textSize="20dp"
         android:textStyle="bold"
         android:background="@color/colorPrimary"

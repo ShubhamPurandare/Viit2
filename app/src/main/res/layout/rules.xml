@@ -9,18 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:text="These are the rules of the event! Please behave according to the rules or you will be disqualified. "
+            android:text="You Can Find The Rules In Google Drive -> Shared With Me Tab. Please Adhere To The Rules Else You Will Be Disqualified. "
             android:layout_width="wrap_content"
             android:id="@+id/ruletext"
             android:textSize="20sp"
             android:textColorHighlight="@color/colorPrimary"
             android:layout_height="wrap_content" />
-        <Button
-            android:layout_width="match_parent"
-            android:text="GOT IT !"
-            android:layout_height="45dp"
-            android:id="@+id/dialogbtn"
-            android:layout_below="@+id/ruletext" />
     </RelativeLayout>
 
 

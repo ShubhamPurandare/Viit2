@@ -77,7 +77,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationView.
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         fabAdd = (FloatingActionButton)findViewById(R.id.fabAdd);
 
-        if (user.getEmail().equals("shubham.purandare@gmail.com") || user.getEmail().equals("mrunalj.369@gmail.com"))
+        if (user.getEmail().equals("shubham.purandare@gmail.com") || user.getEmail().equals("mrunalj.369@gmail.com") || user.getEmail().equals("born.coders.rockon@gmail.com"))
         {
             fabAdd.setVisibility(View.VISIBLE);
         }else {
@@ -114,7 +114,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationView.
             public void onClick(View view) {
                 if(user !=null) {
 
-                    if (user.getEmail().equals("shubham.purandare@gmail.com") || user.getEmail().equals("mrunalj.369@gmail.com")) {
+                    if (user.getEmail().equals("shubham.purandare@gmail.com") || user.getEmail().equals("mrunalj.369@gmail.com") || user.getEmail().equals("born.coders.rockon@gmail.com")) {
                         pid = sharedPreferences.getString("CurrentPidGandharva", "0");
                         currentPidGandharva = Integer.parseInt(pid);
                         pid = sharedPreferences1.getString("CurrentPidPerception", "0");
@@ -257,6 +257,11 @@ public class EventsActivity extends AppCompatActivity implements NavigationView.
 
         if (id == R.id.profile) {
 
+        }else if( id == R.id.aboutUs) {
+
+            Intent intent = new Intent(EventsActivity.this , AboutUsActivity.class);
+            startActivity(intent);
+
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -356,6 +361,13 @@ public class EventsActivity extends AppCompatActivity implements NavigationView.
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 }

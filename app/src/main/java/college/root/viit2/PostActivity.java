@@ -67,8 +67,6 @@ public class PostActivity extends AppCompatActivity {
     String title_val =" ", desc_val=" " , date=" " , teamSize=" " , venue=" ", time=" " , fees=" ",
             rounds= " ", extra=" ", prizes=" " , timePerRound=" ", rules=" " , contactDetails = " ";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -248,6 +246,8 @@ public class PostActivity extends AppCompatActivity {
                     venue = mVenue.getText().toString();
                     prizes = mPrizes.getText().toString();
                     contactDetails = mcontact.getText().toString();
+
+                    Log.i(TAG, rules);
 
 
                     Log.d(TAG, " In startAdding ");

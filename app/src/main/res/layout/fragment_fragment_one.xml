@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
 
-    tools:context="college.root.viit2.Fragments.FragmentTwo">
+    tools:context="college.root.viit2.FragmentOne">
 
 <!-- TODO: Update blank fragment layout -->
     <ImageView

@@ -170,7 +170,7 @@
                 android:ems="10"
                 android:backgroundTint="@color/lightGrey"
                 android:elevation="5dp"
-                android:hint="Enter Rules"
+                android:hint="Enter Google Drive Shareable Link Of Rules"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:padding="10dp"/>

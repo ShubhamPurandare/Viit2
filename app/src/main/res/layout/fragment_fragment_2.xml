@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/split1"
-    tools:context="college.root.viit2.Fragments.FragmentTwo">
+    tools:context="college.root.viit2.Second">
 
 <!-- TODO: Update blank fragment layout -->
     <ImageView

@@ -52,6 +52,8 @@ dependencies {
         transitive = true;
     }
 
+    compile files('libs/CircleImageView-master/gradle/wrapper/gradle-wrapper.jar')
+
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.firebaseui:firebase-ui-database:0.4.0'
@@ -71,8 +73,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1@aar'
     compile 'me.relex:circleindicator:1.2.2@aar'
-    compile files('libs/CircleImageView-master/gradle/wrapper/gradle-wrapper.jar')
-
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

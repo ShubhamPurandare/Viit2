@@ -1,15 +1,23 @@
 package college.root.viit2;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.FileNotFoundException;
 
 import college.root.viit2.Realm.Data;
 import college.root.viit2.Realm.RealmHelper;
@@ -18,7 +26,7 @@ import io.realm.RealmConfiguration;
 
 public class EventsDetailsAct extends AppCompatActivity {
     final Context context = this;
-    private Button button , btnReg , btnComp;
+    private Button btnReg , btnComp , btnRules;
     String TAG ="Test";
     Realm realm;
     Data data;
@@ -26,7 +34,7 @@ public class EventsDetailsAct extends AppCompatActivity {
 
     TextView tvEventName , tvDesc, tvFee, tvParticipants, tvVenue , tvDate , tvTime , tvContact , tvHead , tvRounds , tvPrize1
             , tvPrize2 , tvExtra;
-    Button btnRules;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,7 @@ public class EventsDetailsAct extends AppCompatActivity {
         tvExtra = (TextView)findViewById(R.id.details);
         btnReg = (Button)findViewById(R.id.btnRegister);
         btnComp = (Button)findViewById(R.id.btnComp);
+        btnRules = (Button) findViewById(R.id.rulesbtn);
 
          Intent i = getIntent();
         String title = i.getStringExtra("Title");
@@ -84,33 +93,22 @@ public class EventsDetailsAct extends AppCompatActivity {
 
 
 
-        button = (Button) findViewById(R.id.rulesbtn);
+        btnRules = (Button) findViewById(R.id.rulesbtn);
 
         // add button listener
-        button.setOnClickListener(new View.OnClickListener() {
+        btnRules.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
 
-                // custom dialog
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.rules);
-                dialog.setTitle("RULES");
+                LayoutInflater inflater = getLayoutInflater();
+                View view1 = inflater.inflate(R.layout.rules , null);
+                DialogFragment dialogFragment = new DialogFragment(view1);
+                dialogFragment.show(getSupportFragmentManager() , " Rules ");
 
-                // set the custom dialog components - text, image and button
-                TextView text = (TextView) dialog.findViewById(R.id.text);
-                //text.setText("");
+                startDownload(); // opens the link in browser
                 
-                Button dialogButton = (Button) dialog.findViewById(R.id.dialogbtn);
-                // if button is clicked, close the custom dialog
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
 
-                dialog.show();
             }
         });
 
@@ -139,6 +137,15 @@ public class EventsDetailsAct extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void startDownload() {
+
+        Log.i(TAG, data.getRules());
+
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW , Uri.parse(data.getRules()));
+        startActivity(browserIntent);
 
     }
 }

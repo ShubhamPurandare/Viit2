@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("first",false);
             //For commit the changes, Use either editor.commit(); or  editor.apply();.
             editor.commit();
-            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            Intent intent = new Intent(MainActivity.this, StartActivity.class);
             Log.d(TAG, "run: user is null");
             startActivity(intent);
             finish();
