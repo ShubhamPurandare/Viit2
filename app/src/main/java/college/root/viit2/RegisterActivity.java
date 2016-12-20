@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.util.Calendar;
+
 import college.root.viit2.IntentServices.FirebaseServiceOffline;
 import college.root.viit2.IntentServices.FirebaseServiceOnline;
 import college.root.viit2.Realm.Data;
@@ -175,8 +177,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                                         Toast.makeText(getApplicationContext() , "Successfully registered for the event !", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                        startActivity(new Intent(RegisterActivity.this , EventsActivity.class));
+
+                                        //TODO: add functionality of setting reminder in calendar 24 hrs before the event
+
+                                        addEventInCalendar(); // adds reminder in calender 24hrs before the event
+
+                                        //startActivity(new Intent(RegisterActivity.this , EventsActivity.class));
 
                                     }
 
@@ -220,5 +226,28 @@ public class RegisterActivity extends AppCompatActivity {
     private  boolean isNetWorkAvailable(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null;
+    }
+
+    private void addEventInCalendar() {
+
+
+        Calendar calendar = Calendar.getInstance();
+
+       // calendar.set();
+
+        /*
+      // for Alarm 25/12/2012 at 12.00
+Calendar myAlarmDate = Calendar.getInstance();
+myAlarmDate.setTimeInMillis(System.currentTimeMillis());
+myAlarmDate.set(2012, 11, 25, 12, 00, 0);
+AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+Intent _myIntent = new Intent(context, AlarmReceiverNotificationForEveryMonth.class);
+_myIntent.putExtra("MyMessage","HERE I AM PASSING THEPERTICULAR MESSAGE WHICH SHOULD BE SHOW ON RECEIVER OF ALARM");
+PendingIntent _myPendingIntent = PendingIntent.getBroadcast(context, 123, _myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+alarmManager.set(AlarmManager.RTC_WAKEUP, myAlarmDate.getTimeInMillis(),_myPendingIntent);
+        *
+        * */
+
     }
 }

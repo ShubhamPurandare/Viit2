@@ -70,7 +70,18 @@ public class UsersActivity extends AppCompatActivity {
         helper = new RealmHelper(realm);
 
         data = new Data();
-        data = helper.retriveFromPid(Integer.parseInt(pid));
+
+        if( pid == null ){
+
+            data = helper.retriveFromPid(0);
+
+        }else {
+
+            data = helper.retriveFromPid(Integer.parseInt(pid));
+
+        }
+
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerUser);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(UsersActivity.this);

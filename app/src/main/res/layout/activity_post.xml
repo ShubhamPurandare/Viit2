@@ -129,7 +129,7 @@
                 android:background="@drawable/corners"
                 android:ems="10"
                 android:id="@+id/edDate"
-                android:hint="Enter date of event*"
+                android:hint="Enter date of event In DD/MM/YYYY Format*"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:padding="10dp"/>

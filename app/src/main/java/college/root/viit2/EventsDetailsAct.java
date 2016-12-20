@@ -24,6 +24,7 @@ import college.root.viit2.Realm.RealmHelper;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+
 public class EventsDetailsAct extends AppCompatActivity {
     final Context context = this;
     private Button btnReg , btnComp , btnRules;
@@ -67,13 +68,13 @@ public class EventsDetailsAct extends AppCompatActivity {
         Realm.setDefaultConfiguration(configuration);
         Log.d(TAG , "Realm set");
         realm = Realm.getDefaultInstance();
-         RealmHelper helper = new RealmHelper(realm);
-         data = new Data();
+        RealmHelper helper = new RealmHelper(realm);
+        data = new Data();
         data = helper.retriveFromPid(Integer.parseInt(pid));
 
 
         if(tvContact == null )
-        Log.i(TAG, "onCreate: is null");
+            Log.i(TAG, "onCreate: is null");
         else
             Log.i(TAG   , "onCreate: not null");
 

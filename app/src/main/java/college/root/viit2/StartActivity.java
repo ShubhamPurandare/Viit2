@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 
 import me.relex.circleindicator.CircleIndicator;
 
-public class StartActivity extends AppCompatActivity implements FragmentOne.OnFragmentInteractionListener,Second.OnFragmentInteractionListener,FragmentThree.OnFragmentInteractionListener{
+public class StartActivity extends AppCompatActivity implements FragmentOne.OnFragmentInteractionListener,FragmentThree.OnFragmentInteractionListener{
     ViewPager viewPager;
 
     @Override
@@ -55,8 +55,6 @@ public class StartActivity extends AppCompatActivity implements FragmentOne.OnFr
                 case 0:
                     return new FragmentOne();
                 case 1:
-                    return new Second();
-                case 2:
                     return new FragmentThree();
                 default:
                     return null;
@@ -67,7 +65,7 @@ public class StartActivity extends AppCompatActivity implements FragmentOne.OnFr
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
     }
 }

@@ -37,6 +37,13 @@ import java.util.List;
 import college.root.viit2.Fragments.FragmentTwo;
 
 
+
+//TODO: Add Search and filter option based on department
+//TODO: Add functionality to automatically set reminder in calender when user registers for an event
+//TODO: Add remove registration button
+//TODO: event details xml design improvement with event head name and details
+//TODO: fees missing in all events xml page
+
 public class EventsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DatabaseReference mDatabase;
@@ -314,8 +321,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationView.
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 2;
+            return 1;
         }
 
 
@@ -323,14 +329,7 @@ public class EventsActivity extends AppCompatActivity implements NavigationView.
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
                     return "Perception";
-                case 1:
-                    return "Gandharva";
-
-            }
-            return null;
         }
     }
 

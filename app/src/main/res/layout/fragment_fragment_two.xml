@@ -5,7 +5,6 @@
     android:background="@color/TintGrey"
     tools:context="college.root.viit2.Fragments.FragmentTwo">
 
-    <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="0dp"
         android:layout_width="match_parent"

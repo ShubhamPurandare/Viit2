@@ -10,13 +10,37 @@
     android:background="@drawable/blur"
     tools:context=".Main2Activity">
 
-   <de.hdodenhof.circleimageview.CircleImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+       android:id="@+id/viitImage"
        android:layout_width="190dp"
        android:layout_height="190dp"
        android:src="@drawable/logocut"
-       android:layout_marginLeft="100dp"
-       android:layout_marginTop="120dp"
+       android:layout_centerInParent="true"
        app:civ_border_color="@color/whiteColor"
        app:civ_border_width="20dp"
        />
+
+    <TextView
+        android:id="@+id/Welcomes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WELCOMES"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:textColor="@color/whiteColor"
+        android:layout_below="@+id/viitImage"
+        android:layout_marginTop="36dp"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YOU"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:textColor="@color/whiteColor"
+        android:layout_below="@+id/Welcomes"
+        android:layout_marginTop="8dp"
+        android:layout_centerInParent="true"/>
+
 </RelativeLayout>
