@@ -1,12 +1,19 @@
 package college.root.viit2;
 
+import android.app.AlarmManager;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.*;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +34,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import college.root.viit2.IntentServices.FirebaseServiceOffline;
 import college.root.viit2.IntentServices.FirebaseServiceOnline;
@@ -231,23 +240,78 @@ public class RegisterActivity extends AppCompatActivity {
     private void addEventInCalendar() {
 
 
-        Calendar calendar = Calendar.getInstance();
+        int dayOfEvent =  extractDate(data.getDate());
 
-       // calendar.set();
-
-        /*
-      // for Alarm 25/12/2012 at 12.00
-Calendar myAlarmDate = Calendar.getInstance();
-myAlarmDate.setTimeInMillis(System.currentTimeMillis());
-myAlarmDate.set(2012, 11, 25, 12, 00, 0);
-AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-Intent _myIntent = new Intent(context, AlarmReceiverNotificationForEveryMonth.class);
-_myIntent.putExtra("MyMessage","HERE I AM PASSING THEPERTICULAR MESSAGE WHICH SHOULD BE SHOW ON RECEIVER OF ALARM");
-PendingIntent _myPendingIntent = PendingIntent.getBroadcast(context, 123, _myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-alarmManager.set(AlarmManager.RTC_WAKEUP, myAlarmDate.getTimeInMillis(),_myPendingIntent);
-        *
-        * */
+        addEvent(RegisterActivity.this);
 
     }
+
+    private int extractDate(String date) {
+
+        int i = 0;
+
+        String day = "";
+
+        while(date.charAt(i)  != '/' ) {
+
+            day += date.charAt(i);
+
+            i++;
+
+        }
+
+        return Integer.parseInt(day);
+
+    }
+
+    // Add an event to the calendar of the user.
+    public void addEvent(Context context) {
+        GregorianCalendar calDate = new GregorianCalendar();
+
+        //this._year, this._month, this._day, this._hour, this._minute);
+
+        try {
+            ContentResolver cr = context.getContentResolver();
+            ContentValues values = new ContentValues();
+            values.put(CalendarContract.Events.DTSTART, calDate.getTimeInMillis());
+            values.put(CalendarContract.Events.DTEND, calDate.getTimeInMillis()+60*60*1000);
+            values.put(CalendarContract.Events.TITLE, this._title);
+            values.put(CalendarContract.Events.CALENDAR_ID, 1);
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
+                    .getTimeZone().getID());
+            System.out.println(Calendar.getInstance().getTimeZone().getID());
+            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+            // Save the eventId into the Task object for possible future delete.
+            this._eventId = Long.parseLong(uri.getLastPathSegment());
+            // Add a 5 minute, 1 hour and 1 day reminders (3 reminders)
+            setReminder(cr, this._eventId, 5);
+            setReminder(cr, this._eventId, 60);
+            setReminder(cr, this._eventId, 1440);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // routine to add reminders with the event
+    public void setReminder(ContentResolver cr, long eventID, int timeBefore) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(CalendarContract.Reminders.MINUTES, timeBefore);
+            values.put(CalendarContract.Reminders.EVENT_ID, eventID);
+            values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+            Uri uri = cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
+            Cursor c = CalendarContract.Reminders.query(cr, eventID,
+                    new String[]{CalendarContract.Reminders.MINUTES});
+            if (c.moveToFirst()) {
+                System.out.println("calendar"
+                        + c.getInt(c.getColumnIndex(CalendarContract.Reminders.MINUTES)));
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
