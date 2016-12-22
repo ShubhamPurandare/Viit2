@@ -273,21 +273,19 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             ContentResolver cr = context.getContentResolver();
             ContentValues values = new ContentValues();
-            values.put(CalendarContract.Events.DTSTART, calDate.getTimeInMillis());
-            values.put(CalendarContract.Events.DTEND, calDate.getTimeInMillis()+60*60*1000);
-            values.put(CalendarContract.Events.TITLE, this._title);
+            values.put(CalendarContract.Events.DTSTART, 36000000);
+            values.put(CalendarContract.Events.DTEND, 36000000+7*60*60*1000);
+            values.put(CalendarContract.Events.TITLE, data.getTitle());
             values.put(CalendarContract.Events.CALENDAR_ID, 1);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
                     .getTimeZone().getID());
-            System.out.println(Calendar.getInstance().getTimeZone().getID());
+           // System.out.println(Calendar.getInstance().getTimeZone().getID());
             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
             // Save the eventId into the Task object for possible future delete.
-            this._eventId = Long.parseLong(uri.getLastPathSegment());
-            // Add a 5 minute, 1 hour and 1 day reminders (3 reminders)
-            setReminder(cr, this._eventId, 5);
-            setReminder(cr, this._eventId, 60);
-            setReminder(cr, this._eventId, 1440);
+         long eventId = Long.parseLong(uri.getLastPathSegment());
+            // Add a 1 day reminders (3 reminders)
+            setReminder(cr, eventId, 1440);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -304,10 +302,7 @@ public class RegisterActivity extends AppCompatActivity {
             Uri uri = cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
             Cursor c = CalendarContract.Reminders.query(cr, eventID,
                     new String[]{CalendarContract.Reminders.MINUTES});
-            if (c.moveToFirst()) {
-                System.out.println("calendar"
-                        + c.getInt(c.getColumnIndex(CalendarContract.Reminders.MINUTES)));
-            }
+
             c.close();
         } catch (Exception e) {
             e.printStackTrace();
