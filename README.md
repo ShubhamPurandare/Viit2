@@ -1,10 +1,10 @@
 # Viit2
 First developer of the Institute in successfully launching an Android app for College technical events.
-An application dowmloaded by 300+ users, serving the purpose of online registration of technical events of Vishwakarma Institute Of Information Technology .
+An application downloaded by 300+ users, serving the purpose of online registration of technical events of Vishwakarma Institute Of Information Technology .
 Features :
 1. Login/ signup with Gmail.
 2. Phone Nunber authentication using Twitter digits.
-3. Go through all the currently ongoing events. 
+3. View all the currently ongoing events. 
 4. Directly contact the event head.
 5. See the background Competition for each event.
 6. Register online for any event. (Registeration details will be automatically taken from google account.)
